@@ -1,12 +1,12 @@
 {
-  "name": "nodeeksamen",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "reset-db": "node ./database/createDatabase.js delete_mode"
+    "reset-db": "node ./database/resetDatabase.js delete_mode"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,7 @@
     "nodemon": "^2.0.22",
     "ratelimit": "^0.0.4",
     "router": "^1.3.8",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "toastr": "^2.1.4"
   }
 }

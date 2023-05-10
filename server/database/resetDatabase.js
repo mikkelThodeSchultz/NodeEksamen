@@ -1,8 +1,6 @@
 import db from "./connection.js"
 import bcrypt from "bcrypt";
 
-console.log("TEST");
-
 const isDeleteMode = process.argv.findIndex((argument) => argument === "delete_mode") === -1 ? false : true;
 
 if (isDeleteMode){
