@@ -1,6 +1,7 @@
 import {Router} from "express"
 import bcrypt from "bcrypt"
 import db from "../database/connection.js"
+import { ObjectId } from "mongodb";
 
 const router = Router();
 
@@ -61,14 +62,23 @@ router.put("/auth/password", async (req, res) => {
         return res.status(400).send({message: "Empty body"})
     };
     const code = req.body.forgotPasswordCode;
-    if (code !== req.session.resetPasswordCode.toString()){
-        return res.status(400).send({message: "Wrong code"})
+    
+    const foundResetPassword = await db.resetCollection.findOne(
+        {resetCode: code},
+        {sort: {_id: -1}}
+        );
+    if (!foundResetPassword){
+        return res.status(400).send({message: "Wrong or expired code."})
+    };
+    if (foundResetPassword.expirationDate < new Date()){
+        return res.status(400).send({message: "Expired code."})
     }
-    const email = req.session.email;
+
     const newPassword = req.body.newPassword;
     const hashedPassword = await bcrypt.hash(newPassword, 12);
-
-    db.users.updateOne({email: email}, {$set: {password: hashedPassword}});
+    const updatePassword = await db.users.updateOne({_id: new ObjectId(foundResetPassword.userID)}, {$set: {password: hashedPassword}});
+    const foundUser = await db.users.findOne({_id: new ObjectId(foundResetPassword.userID)})
+    const deleteUserFromResetCollection = await db.resetCollection.deleteMany({userID: new ObjectId(foundUser._id)});
 
     return res.status(200).send({message: "User updated"})
 });

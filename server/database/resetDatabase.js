@@ -14,6 +14,10 @@ const createAdam = {userName: "Adam", email: "AdamsEmail", password: AdamPasswor
 const createMik = {userName: "Mik", email: "michaelthodeschultz@gmail.com", password: MikPassword, role: "User"};
 const createKev = {userName: "Kev", email: "KevosEmail", password: KevPassword, role: "User"};
 
-const createUser = await db.users.insertMany([
+const createResetCollection = await db.resetCollection.insertOne({userID: "testUserID", resetCode: "ABC123", expirationDate: "13-12-23"});
+
+const createUsers = await db.users.insertMany([
     createAdam, createMik, createKev
 ]);
+
+
