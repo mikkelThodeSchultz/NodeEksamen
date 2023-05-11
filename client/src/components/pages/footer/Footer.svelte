@@ -11,6 +11,6 @@ const copyrightYear = `© ${new Date().getFullYear() }`
 
 <style>
     #footerContainer{
-        
+    
     }
 </style>

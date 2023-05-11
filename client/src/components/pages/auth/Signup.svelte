@@ -2,8 +2,6 @@
     import { Link } from "svelte-navigator";
     import toastr from "toastr";
 
-    
-
     let userName;
     let email;
     let password;
@@ -28,9 +26,13 @@
             if(result.status===200){
                 toastr.success("Account created succesfully, Welcome!")
                 setTimeout(function() {
-                    navigate("/");
+                    location.href = "/"
                 }, 2000);
             }
+        })
+        .catch(error => {
+            toastr.warning("An unexpected error has occurred. Please try again")
+            console.error(error);
         })
     }
 

@@ -7,6 +7,7 @@ import { isLoggedOut } from "../util/loggedInMiddleware.js";
 const router = Router();
 
 router.post("/api/forgot-password", isLoggedOut, async (req, res) => {
+    try{
     if (!req.body){
         return res.status(400).send({message: "Empty body"})
     };
@@ -22,6 +23,11 @@ router.post("/api/forgot-password", isLoggedOut, async (req, res) => {
     await db.resetCollection.deleteMany({userID: new ObjectId(foundUser[0]._id)});
     await db.resetCollection.insertOne({userID: foundUser[0]._id, resetCode: resetPasswordCode, expirationDate: expirationDate});
     return res.status(200).send({message: `An email has been sent to ${email}`});
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).send({ message: "Server error" });
+    }
 });
 
 async function generateRandomResetCode() {

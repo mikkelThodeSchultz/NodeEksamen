@@ -7,6 +7,7 @@ import { isLoggedOut } from "../util/loggedInMiddleware.js";
 const router = Router();
 
 router.post("/auth/login", isLoggedOut, async (req, res) => {
+    try{
     if (!req.body){
         return res.status(400).send({message: "Empty body"})
     };
@@ -28,10 +29,15 @@ router.post("/auth/login", isLoggedOut, async (req, res) => {
     else {
         return res.status(400).send({message: "Wrong email"})
     }
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).send({ message: "Server error" });
+    }
 });
 
 router.post("/auth/signup", isLoggedOut, async (req, res) => {
-    
+    try{
     if (!req.body){
         return res.status(400).send({message: "Empty body"})
     };
@@ -61,12 +67,17 @@ router.post("/auth/signup", isLoggedOut, async (req, res) => {
     else if (existingUsername.length !== 0) {
         return res.status(400).send({ message: "A user with that username already exists" });
     }
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).send({ message: "Server error" });
+    }
 }); 
 
 //TODO Skal måske deles op i flere endpoints
 
 router.put("/auth/password", isLoggedOut, async (req, res) => {
-
+    try{
     if (!req.body){
         return res.status(400).send({message: "Empty body"})
     };
@@ -86,6 +97,11 @@ router.put("/auth/password", isLoggedOut, async (req, res) => {
     await db.users.updateOne({_id: new ObjectId(foundResetPassword.userID)}, {$set: {password: hashedPassword}});
     await db.resetCollection.deleteOne({resetCode: code});
     return res.status(200).send({message: "User updated"});
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).send({ message: "Server error" });
+    }
 });
 
 export default router;

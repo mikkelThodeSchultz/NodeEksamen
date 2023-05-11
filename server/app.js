@@ -42,6 +42,8 @@ import forgotPasswordRouter from "./routers/forgotPasswordRouter.js";
 app.use(forgotPasswordRouter);
 import sessionRouter from "./routers/sessionRouter.js";
 app.use(sessionRouter);
+import userRouter from "./routers/userRouter.js";
+app.use(userRouter);
 
 app.get("*", (req, res) => {
     res.send("<h1>404 - Not Found</h1>")
