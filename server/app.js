@@ -1,5 +1,6 @@
 import dotenv from "dotenv/config";
 import express from "express";
+
 const app = express();
 app.use(express.json())
 
@@ -39,7 +40,8 @@ import authRouter from "./routers/authRouter.js";
 app.use(authRouter);
 import forgotPasswordRouter from "./routers/forgotPasswordRouter.js";
 app.use(forgotPasswordRouter);
-
+import sessionRouter from "./routers/sessionRouter.js";
+app.use(sessionRouter);
 
 app.get("*", (req, res) => {
     res.send("<h1>404 - Not Found</h1>")
