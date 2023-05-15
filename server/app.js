@@ -17,7 +17,7 @@ import session from "express-session"
 app.use(session({
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: false,
+        saveUninitialized: true,
         cookie: { secure: false }
 }));
 
@@ -36,6 +36,25 @@ app.use("/auth", rateLimit({
 	legacyHeaders: false
 }));
 
+import http from "http";
+const server = http.createServer(app);
+
+import { Server } from "socket.io";
+const io = new Server(server, {
+    cors: {
+        origin: "*", //Should be specific origin and methods in production
+        methods: ["*"]
+    }
+});
+
+io.on("connection", (socket) => {
+    console.log("A socket connected", socket.id);
+
+    socket.on("An Admin sent a message", (data) => {
+        io.emit("An Admin message just dropped", data)
+    })
+});
+
 import authRouter from "./routers/authRouter.js";
 app.use(authRouter);
 import forgotPasswordRouter from "./routers/forgotPasswordRouter.js";
@@ -50,7 +69,7 @@ app.get("*", (req, res) => {
 });
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, (error) => {
+server.listen(PORT, (error) => {
     if (error){
         console.log(error)
     };

@@ -59,7 +59,7 @@ router.post("/auth/signup", isLoggedOut, async (req, res) => {
         req.session.email = newUser.email;
         req.session.role = newUser.role;
         req.session.isUserLoggedIn = true;
-        return res.status(200).send({ message: "User created successfully" , userName: userName});
+        return res.status(200).send({ message: "User created successfully" , data: {userName: userName, role: role}});
     }       
     else if (existingEmail.length !== 0) {
         return res.status(400).send({ message: "A user with that email already exists" });

@@ -1,6 +1,7 @@
 <script>
     import { navigate } from "svelte-navigator";
     import toastr from "toastr";
+    import { BASE_URL } from "../../stores/globalStore";
 
     let email;
     let forgotPasswordCode;
@@ -11,7 +12,7 @@
             toastr.warning("Please enter you're email");
             return;
         }
-        fetch('http://localhost:8080/api/forgot-password', {
+        fetch($BASE_URL + '/api/forgot-password', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -38,7 +39,7 @@
             toastr.warning("Please enter both you're code and a new password")
             return;
         }
-        fetch('http://localhost:8080/auth/password', {
+        fetch($BASE_URL + '/auth/password', {
             method: 'PUT',
             credentials: 'include',
             headers: {

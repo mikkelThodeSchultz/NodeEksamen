@@ -1,6 +1,7 @@
 <script>
-    import { Link } from "svelte-navigator";
+    import { Link, navigate } from "svelte-navigator";
     import toastr from "toastr";
+    import { BASE_URL, loggedInUser, userRole } from "../../stores/globalStore";
 
 
     let email;
@@ -11,7 +12,7 @@
             toastr.warning("Please fill out both email and password");
             return;
         }
-        fetch('http://localhost:8080/auth/login', {
+        fetch($BASE_URL + '/auth/login', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -26,7 +27,11 @@
             if(result.status===200){
                 toastr.success("Welcome my friend!")
                 setTimeout(function() {
-                location.href = "/"
+                    result.json().then(data => {
+                    loggedInUser.set(data.data.userName);
+                    userRole.set(data.data.role);
+                })
+                navigate("/");
             }, 2000);
             }
         })

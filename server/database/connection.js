@@ -10,7 +10,7 @@ const db = client.db("Dybdestegte");
 export default{
   database: db,
   users: db.collection("users"),
-  bands: db.collection("music"),
+  music: db.collection("music"),
   shows: db.collection("shows"),
   comments: db.collection("comments"),
   resetCollection: db.collection("resetCollection")
