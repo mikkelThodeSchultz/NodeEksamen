@@ -1,7 +1,12 @@
 
 <script>
 import { modalMessage, hideModal } from "../../stores/modalStore.js";
+
+
+
+
 </script>
+
 
 
 {#if $modalMessage}

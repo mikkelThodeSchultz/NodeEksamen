@@ -2,7 +2,7 @@
     import toastr from "toastr";
     import { getSocket } from "../../socketManager/socketManager.js";
     import { onDestroy } from "svelte";
-    import { showModal, hideModal, modalMessage } from "../../stores/modalStore.js";
+    import { showModal } from "../../stores/modalStore.js";
 
 
     let adminMessage = "";
@@ -13,6 +13,9 @@
         socket.emit("An Admin sent a message", {data: adminMessage})
     };
 
+    //Tror det er på grund af at setupEventListener() kun bliver kaldt
+    //herinde, at pop-up beskeden kun bliver vist til Admins.
+    //måske den skal rykkes ud i sin egen hjælpemetode
     function setupEventListener() {
         eventListener = (data) => {
             showModal(data.data);

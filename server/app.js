@@ -1,8 +1,9 @@
 import dotenv from "dotenv/config";
 import express from "express";
+import { saveMessageFromSocket } from "./routers/chatRouter.js";
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
 
 import cors from "cors";
 app.use(cors({
@@ -21,7 +22,6 @@ app.use(session({
         cookie: { secure: false }
 }));
 
-
 import rateLimit from 'express-rate-limit'
 app.use("/api/forgot-password", rateLimit({
 	windowMs: 15 * 60 * 1000, 
@@ -31,7 +31,7 @@ app.use("/api/forgot-password", rateLimit({
 }));
 app.use("/auth", rateLimit({
 	windowMs: 15 * 60 * 1000, 
-	max: 20, 
+	max: 10, 
 	standardHeaders: true, 
 	legacyHeaders: false
 }));
@@ -51,9 +51,17 @@ io.on("connection", (socket) => {
     console.log("A socket connected", socket.id);
 
     socket.on("An Admin sent a message", (data) => {
-        io.emit("An Admin message just dropped", data)
-    })
+        io.emit("An Admin message just dropped", data);
+    });
+
+    socket.on("chat message to server", async message => {
+        await saveMessageFromSocket(message);
+        io.emit("chat message to client", message);
+    });
+
 });
+
+
 
 import authRouter from "./routers/authRouter.js";
 app.use(authRouter);
@@ -63,6 +71,8 @@ import sessionRouter from "./routers/sessionRouter.js";
 app.use(sessionRouter);
 import userRouter from "./routers/userRouter.js";
 app.use(userRouter);
+import chatRouter from "./routers/chatRouter.js"
+app.use(chatRouter);
 
 app.get("*", (req, res) => {
     res.send("<h1>404 - Not Found</h1>")

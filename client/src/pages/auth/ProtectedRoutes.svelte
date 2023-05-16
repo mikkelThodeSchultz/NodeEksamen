@@ -13,6 +13,7 @@
     import { BASE_URL, loggedInUser, userRole } from "../../stores/globalStore";
     import { initializeSocket } from "../../socketManager/socketManager.js";
     import Wrapper from "../../components/wrapper/Wrapper.svelte";
+    import Chat from "../chat/Chat.svelte";
 
 
     let userRoleFromSession;
@@ -50,6 +51,7 @@
                 <Link to="/">Home</Link>
             {#if $loggedInUser}
                 <Link to="/signout">Sign out</Link>
+                <Link to="/chat">Group chat</Link>
             {:else}
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign up</Link>
@@ -61,10 +63,11 @@
             {/if}
 
         </nav>
-
+        
         <Route path="/"><Home/></Route>
         {#if  $loggedInUser}
         <Route path="/signout" primary={false} ><Signout/></Route>
+        <Route path="/chat" primary={false}><Chat/></Route>
         {:else}
         <Route path="/signup" ><Signup/></Route>
         <Route path="/login" ><Login/></Route>

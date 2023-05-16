@@ -88,7 +88,7 @@ router.put("/auth/password", isLoggedOut, async (req, res) => {
         return res.status(400).send({message: "Wrong code."})
     };
     if (foundResetPassword.expirationDate < new Date()){
-        return res.status(401).send({message: "Expired code."})
+        return res.status(400).send({message: "Expired code."})
     };
 
     const newPassword = req.body.newPassword;

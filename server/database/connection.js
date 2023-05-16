@@ -13,5 +13,6 @@ export default{
   music: db.collection("music"),
   shows: db.collection("shows"),
   comments: db.collection("comments"),
+  chatMessages: db.collection("chatMessages"),
   resetCollection: db.collection("resetCollection")
 }
