@@ -43,13 +43,65 @@
 
 </script>
 
+<div id="wrapper">
+    <form on:submit|preventDefault={handleLogin}>
+        <labels for="email">Email</labels>
+        <input type="email" placeholder="Enter Email" bind:value={email}>
+        <labels for="password">Password</labels>
+        <input type="password" placeholder="Enter Password" bind:value={password}>
+        <button type="submit">Login</button>
+        <p> <Link to="/forgot-password">Forgot password?</Link> </p>
+    </form>
+</div>
 
-<h3>Login</h3>
-<form on:submit|preventDefault={handleLogin}>
-    <labels for="email">Email</labels>
-    <input type="email" placeholder="Enter Email" bind:value={email}>
-    <labels for="password">Password</labels>
-    <input type="password" placeholder="Enter Password" bind:value={password}>
-    <button type="submit">Login</button>
-    <p> <Link to="/forgot-password">Forgot password?</Link> </p>
-</form>
+
+<style>
+    #wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: 'Trirong', serif;
+    }
+    
+    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    padding: 20px;
+    border: solid #000000;
+    background-color: gold;
+    }
+    
+    
+    
+    input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: solid #000000;
+    
+    }
+    
+    button {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    border: solid #000000;
+    border-radius: 0px;
+    }
+    
+    button:hover {
+    background-color: #babab9;
+    }
+    
+    p {
+    margin-top: 10px;
+    text-align: center;
+    }
+    
+    
+    </style>

@@ -20,4 +20,5 @@
     
 </script>
 
-<button on:click={handleLogout}>Sign out</button>
+
+<a href="/" on:click={handleLogout} tabindex="0">Sign out</a>

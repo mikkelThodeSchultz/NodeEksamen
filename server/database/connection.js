@@ -1,4 +1,3 @@
-import dotenv from "dotenv/config";
 import { MongoClient } from "mongodb";
 
 const url = "mongodb://127.0.0.1:27017";

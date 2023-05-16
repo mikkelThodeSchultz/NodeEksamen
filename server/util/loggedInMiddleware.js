@@ -11,6 +11,12 @@ const isLoggedOut = (req, res, next) => {
         return res.status(400).json({message: "User is logged in"})
     }
     next();
-}
+};
 
-export {isLoggedIn, isLoggedOut};
+const isAdmin = (req, res, next) => {
+    if(req.session.role !== "Admin"){
+        return res.status(400).json({message: "Logged in user is not an Admin"})
+    }
+    next();
+};
+export {isLoggedIn, isLoggedOut, isAdmin};

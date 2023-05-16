@@ -9,3 +9,8 @@
   <ProtectedRoutes/>
   <Footer/>
   </Wrapper>
+
+  <style>
+    @import '@fortawesome/fontawesome-free/css/all.css';
+  </style>
+  

@@ -63,6 +63,8 @@ io.on("connection", (socket) => {
 
 
 
+
+
 import authRouter from "./routers/authRouter.js";
 app.use(authRouter);
 import forgotPasswordRouter from "./routers/forgotPasswordRouter.js";
@@ -73,6 +75,8 @@ import userRouter from "./routers/userRouter.js";
 app.use(userRouter);
 import chatRouter from "./routers/chatRouter.js"
 app.use(chatRouter);
+import musicRouter from "./routers/musicRouter.js"
+app.use(musicRouter);
 
 app.get("*", (req, res) => {
     res.send("<h1>404 - Not Found</h1>")

@@ -69,19 +69,70 @@
 
 </script>
 
+<div id="wrapper">
+    <h3>Forgot Password</h3>
+    <h4>Please enter your email, and we will send you a code.</h4>
+    <form on:submit|preventDefault={handleGetCode}>
+        <labels for="email">Email</labels>
+        <input type="email" placeholder="Enter Email" bind:value={email}>
+        <button type="submit">Get code</button>
+    </form>
+    <h4>Please enter the code and a new password.</h4>
+    <form on:submit|preventDefault={handleNewPassword}>
+        <labels for="code">Code</labels>
+        <input type="text" placeholder="Enter Code" bind:value={forgotPasswordCode}>
+        <labels for="newPassword">New Password</labels>
+        <input type="password" placeholder="Enter new password" bind:value={newPassword}>
+        <button type="submit">Change password</button>
+    </form>
+</div>
 
-<h3>Forgot Password</h3>
-<h4>Please enter your email, and we will send you a code.</h4>
-<form on:submit|preventDefault={handleGetCode}>
-    <labels for="email">Email</labels>
-    <input type="email" placeholder="Enter Email" bind:value={email}>
-    <button type="submit">Get code</button>
-</form>
-<h4>Please enter the code and a new password.</h4>
-<form on:submit|preventDefault={handleNewPassword}>
-    <labels for="code">Code</labels>
-    <input type="text" placeholder="Enter Code" bind:value={forgotPasswordCode}>
-    <labels for="newPassword">New Password</labels>
-    <input type="password" placeholder="Enter new password" bind:value={newPassword}>
-    <button type="submit">Change password</button>
-</form>
+<style>
+    #wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: 'Trirong', serif;
+    }
+    
+    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    padding: 20px;
+    border: solid #000000;
+    background-color: gold;
+    }
+    
+    
+    
+    input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: solid #000000;
+    
+    }
+    
+    button {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    border: solid #000000;
+    border-radius: 0px;
+    }
+    
+    button:hover {
+    background-color: #babab9;
+    }
+    
+    p {
+    margin-top: 10px;
+    text-align: center;
+    }
+    
+</style>

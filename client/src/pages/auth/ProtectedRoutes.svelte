@@ -40,9 +40,6 @@
     }
     onMount(handleGetSession)
     onMount(initializeSocket);
-
-    
-
 </script>
 
 {#if isSessionDataLoaded}
@@ -50,23 +47,20 @@
         <nav>
                 <Link to="/">Home</Link>
             {#if $loggedInUser}
-                <Link to="/signout">Sign out</Link>
+                <Signout/>
                 <Link to="/chat">Group chat</Link>
             {:else}
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign up</Link>
             {/if}
-                <Link to="/dybdestegterecords">Dybdestegte Records</Link>
-                <Link to="/dybdestegtebookings">Dybdestegte Bookings</Link>
             {#if $userRole === "Admin"}
                 <Link to = "/adminmessage">Admin send message</Link>
             {/if}
-
+            
         </nav>
         
         <Route path="/"><Home/></Route>
         {#if  $loggedInUser}
-        <Route path="/signout" primary={false} ><Signout/></Route>
         <Route path="/chat" primary={false}><Chat/></Route>
         {:else}
         <Route path="/signup" ><Signup/></Route>
@@ -88,11 +82,14 @@
 
 <style>
     nav {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     margin-left: 1em;
     margin-top: 1em;
+    z-index: 1;
+    
+    
 }
 
 
