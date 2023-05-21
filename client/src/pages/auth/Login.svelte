@@ -2,10 +2,12 @@
     import { Link, navigate } from "svelte-navigator";
     import toastr from "toastr";
     import { BASE_URL, loggedInUser, userRole } from "../../stores/globalStore";
-
+    import { createEventDispatcher } from "svelte";
 
     let email;
     let password;
+    const dispatchLogin = createEventDispatcher();
+    const dispatchForgotPassword = createEventDispatcher();
 
     function handleLogin(){
         if(!email || !password){
@@ -30,6 +32,7 @@
                     result.json().then(data => {
                     loggedInUser.set(data.data.userName);
                     userRole.set(data.data.role);
+                    dispatchLogin("login");
                 })
                 navigate("/");
             }, 2000);
@@ -38,7 +41,11 @@
         .catch(error => {
             toastr.warning("An unexpected error has occurred. Please try again")
             console.error(error);
-        })
+        });
+    }
+
+    function handleForgotPassword () {
+        dispatchForgotPassword("openForgotPassword");
     }
 
 </script>
@@ -50,21 +57,13 @@
         <labels for="password">Password</labels>
         <input type="password" placeholder="Enter Password" bind:value={password}>
         <button type="submit">Login</button>
-        <p> <Link to="/forgot-password">Forgot password?</Link> </p>
+        <p on:click={handleForgotPassword} on:keydown={handleForgotPassword}>Forgot password?</p>
     </form>
 </div>
 
 
 <style>
-    #wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        font-family: 'Trirong', serif;
-    }
+
     
     form {
     display: flex;
@@ -101,6 +100,8 @@
     p {
     margin-top: 10px;
     text-align: center;
+    cursor: pointer;
+    color: blue;
     }
     
     

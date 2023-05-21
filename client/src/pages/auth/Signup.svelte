@@ -2,10 +2,13 @@
     import { Link, navigate } from "svelte-navigator";
     import toastr from "toastr";
     import { BASE_URL, loggedInUser, userRole } from "../../stores/globalStore";
+    import { createEventDispatcher } from "svelte";
 
     let userName;
     let email;
     let password;
+    const dispatchSignup = createEventDispatcher();
+    const dispatchAlreadyHaveAccount = createEventDispatcher();
 
     function handleSignUp() {
         if(!userName || !email || !password){
@@ -30,6 +33,7 @@
                     result.json().then(data => {
                     loggedInUser.set(data.data.userName);
                     userRole.set(data.data.role);
+                    dispatchSignup("signup");
                 })
                     navigate("/");
                 }, 2000);
@@ -39,6 +43,10 @@
             toastr.warning("An unexpected error has occurred. Please try again")
             console.error(error);
         })
+    }
+
+    function handleAlreadyHaveAnAccount() {
+        dispatchAlreadyHaveAccount("alreadyHaveAccount")
     }
 
 </script>
@@ -51,20 +59,12 @@
         <labels for="password">Password</labels>
         <input type="password" placeholder="Enter Password" bind:value={password}>
         <button type="submit">Sign up</button>
-        <p> <Link to="/login">Already have an account? </Link></p>
+        <p on:click={handleAlreadyHaveAnAccount} on:keydown={handleAlreadyHaveAnAccount}> Already have an account?</p>
     </form>
 </div>
 
 <style>
-#wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: 'Trirong', serif;
-}
+
 
 form {
 display: flex;
@@ -101,6 +101,8 @@ background-color: #babab9;
 p {
 margin-top: 10px;
 text-align: center;
+cursor: pointer;
+color: blue;
 }
 
 

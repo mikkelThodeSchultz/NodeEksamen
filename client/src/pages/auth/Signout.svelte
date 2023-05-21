@@ -16,9 +16,13 @@
                 navigate("/");
             }, 2000);
     }
-    
-    
+
+
 </script>
 
-
-<a href="/" on:click={handleLogout} tabindex="0">Sign out</a>
+<img src="" alt="Logout" on:click={handleLogout} on:keydown={handleLogout}>
+<style>
+img:hover{
+    cursor: pointer;
+}
+</style>

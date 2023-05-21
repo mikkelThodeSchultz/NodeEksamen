@@ -49,7 +49,6 @@
             message: `${receivedMessage.userName}: ${receivedMessage.message}`,
             time: `${date}`
         }
-        console.log(shownMessage);
         chatMessages = [...chatMessages, shownMessage];
         scrollToBottom();
         });
@@ -105,13 +104,13 @@
     flex-grow: 1;
     overflow:auto;
     background-color: rgb(221, 221, 221);
-    width: 100%; /* Set the width to 100% */
+    width: 100%;
 }
 
 .chat-message {
     display: flex;
-    justify-content: space-between; /* Align text and time horizontally */
-    align-items: baseline; /* Align items vertically */
+    justify-content: space-between;
+    align-items: baseline;
     margin-bottom: 8px;
 }
 
@@ -121,7 +120,7 @@
 }
 
 .chat-message-text{
-    overflow-wrap: break-word;
+    word-break: break-word;
     margin-left: 1em;
 }
 

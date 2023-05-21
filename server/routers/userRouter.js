@@ -1,6 +1,7 @@
 import {Router} from "express"
 import db from "../database/connection.js"
 import { ObjectId } from "mongodb";
+import { isAdmin } from "../util/loggedInMiddleware.js";
 
 const router = Router();
 
@@ -10,7 +11,7 @@ router.get("/api/users", async (req, res) => {
         let userArray = [];
 
         users.forEach(user => {
-            userArray.push({_id: user._id, userName: user.userName, role: user.role});
+            userArray.push({_id: user._id, userName: user.userName, email: user.email, role: user.role});
         });
         return res.status(200).send({data: userArray});
     } catch(error){
@@ -19,8 +20,7 @@ router.get("/api/users", async (req, res) => {
     }
 });
 
-//HUSK måske det kun admin der må have adgang til at opdatere
-router.put("/api/user/:id", async (req, res) => {
+router.put("/api/user/:id", isAdmin, async (req, res) => {
     try {
         const id = new ObjectId(req.params.id);
         const updatedUser = req.body;
@@ -36,7 +36,7 @@ router.put("/api/user/:id", async (req, res) => {
     }
 });
 
-router.delete("/api/user/:id", async (req, res ) => {
+router.delete("/api/user/:id", isAdmin, async (req, res ) => {
     try {
         const id = new ObjectId(req.params.id);
         const userDelete = await db.users.deleteOne({_id: id});

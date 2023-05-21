@@ -2,10 +2,12 @@
     import { navigate } from "svelte-navigator";
     import toastr from "toastr";
     import { BASE_URL } from "../../stores/globalStore";
+    import { createEventDispatcher } from "svelte";
 
     let email;
     let forgotPasswordCode;
     let newPassword;
+    const dispatchChangePassword = createEventDispatcher();
 
     function handleGetCode(){
         if(!email){
@@ -57,7 +59,7 @@
             if(result.status===200){
                 toastr.success("You're password has been changed succesfully")
                 setTimeout(function() {
-                    navigate("/login");
+                    dispatchChangePassword("changePassword");
                 }, 2000);
             }
         })
@@ -70,15 +72,16 @@
 </script>
 
 <div id="wrapper">
-    <h3>Forgot Password</h3>
-    <h4>Please enter your email, and we will send you a code.</h4>
+    
     <form on:submit|preventDefault={handleGetCode}>
+        <h4>Please enter your email, and we will send you a code.</h4>
         <labels for="email">Email</labels>
         <input type="email" placeholder="Enter Email" bind:value={email}>
         <button type="submit">Get code</button>
     </form>
-    <h4>Please enter the code and a new password.</h4>
+
     <form on:submit|preventDefault={handleNewPassword}>
+        <h4>Please enter the code and a new password.</h4>
         <labels for="code">Code</labels>
         <input type="text" placeholder="Enter Code" bind:value={forgotPasswordCode}>
         <labels for="newPassword">New Password</labels>
@@ -89,50 +92,41 @@
 
 <style>
     #wrapper {
-        display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
         margin: 0;
         padding: 0;
         font-family: 'Trirong', serif;
     }
     
     form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 300px;
-    padding: 20px;
-    border: solid #000000;
-    background-color: gold;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 300px;
+        padding: 20px;
+        border: solid #000000;
+        background-color: gold;
     }
-    
     
     
     input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: solid #000000;
-    
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: solid #000000;
     }
     
     button {
-    width: 100%;
-    padding: 10px;
-    cursor: pointer;
-    border: solid #000000;
-    border-radius: 0px;
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+        border: solid #000000;
+        border-radius: 0px;
     }
     
     button:hover {
-    background-color: #babab9;
+        background-color: #babab9;
     }
-    
-    p {
-    margin-top: 10px;
-    text-align: center;
-    }
-    
+
 </style>

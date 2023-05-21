@@ -10,17 +10,22 @@
             navigate("/dybdestegtebookings")
         }
     }
-    function handleKeyDown(){
+
+    function handleCheckKey(event){
+        if (event.key==="Enter"){
+            handleNavigate(event);
+        }
     }
+    
 
 </script>
 
 <div id="wrapper">
     <div class="container">
-        <div class="split left" on:click={handleNavigate} on:keydown={handleKeyDown}> 
+        <div class="split left" on:click={handleNavigate} on:keydown={handleCheckKey}> 
             <h1>Dybdestegte Records</h1>
         </div>
-        <div class="split right" on:click={handleNavigate} on:keydown={handleKeyDown}>
+        <div class="split right" on:click={handleNavigate} on:keydown={handleCheckKey}>
             <h1>Dybdestegte Bookings</h1>
         </div>
     </div>

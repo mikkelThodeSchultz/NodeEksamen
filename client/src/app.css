@@ -30,16 +30,16 @@ a:hover {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+  border: solid #000000;
+  border-radius: 0px;
   padding: 0.6em 1.2em;
   background-color: #ffffff;
   cursor: pointer;
-  border-color: black;
+  border: solid #000000;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #a2a2a2;
+  background-color: #babab9;
 }
 button:focus,
 button:focus-visible {
