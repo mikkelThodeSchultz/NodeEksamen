@@ -19,9 +19,9 @@ const copyrightYear = `© ${new Date().getFullYear() }`
 #footerContainer{
     position: fixed;
     bottom: 0%;
-    margin: 0 auto;
     width: 100%;
     text-align: center;
+    background-color: rgb(195, 195, 195, 0.2);
 }
 #copyright{
     color: rgb(195, 195, 195);

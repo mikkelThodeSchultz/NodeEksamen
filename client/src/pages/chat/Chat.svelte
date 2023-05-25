@@ -4,6 +4,7 @@
     import { onMount, tick } from "svelte";
     import { loggedInUser } from "../../stores/globalStore";
     import { BASE_URL } from "../../stores/globalStore";
+    import { formatDate } from "../../dateFormater/formatDate";
 
     let messageFromServer;
     let message = "";
@@ -44,11 +45,10 @@
     onMount(async () => {
     socket.on('chat message to client', (receivedMessage) => {
         const date = formatDate(receivedMessage.timeStamp)
-        console.log(receivedMessage);
         const shownMessage = {
             message: `${receivedMessage.userName}: ${receivedMessage.message}`,
             time: `${date}`
-        }
+            }
         chatMessages = [...chatMessages, shownMessage];
         scrollToBottom();
         });
@@ -64,11 +64,6 @@
         }
     };
 
-    function formatDate(date){
-        const dateFromString = new Date(date);
-        const dateToHoursAndMinutes = dateFromString.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", hour12: false})
-        return dateToHoursAndMinutes;
-    }
 
 </script>
 
@@ -138,4 +133,6 @@
 .chat-input button {
     padding: 8px 16px;
 }
+
+
 </style>

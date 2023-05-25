@@ -3,40 +3,38 @@
     import { BASE_URL } from "../../stores/globalStore";
     import { createEventDispatcher } from "svelte";
 
-    const dispatchSelectedUser = createEventDispatcher();
-    let allUsers = [];
+    const dispatchSelectedMusic = createEventDispatcher();
+    let allMusic = [];
 
-    const handleGetAllUsers = async () => {
+    const handleGetAllMusic = async () => {
         try {
-            const response = await fetch($BASE_URL + '/api/users', {
+            const response = await fetch($BASE_URL + '/api/allMusic', {
                 method: 'GET',
                 credentials: 'include',
             });
             const result = await response.json();
-            result.data.forEach(user => {
-                let userFromServer = user;
-                allUsers = [... allUsers, userFromServer];
-            })
+            allMusic = allMusic.concat(result.data);
+            
         }catch(error){
         console.log(error);
         }
     }
 
-    function handleSelectUser(user){
-        dispatchSelectedUser("userSelected", user)
+    function handleSelectMusic(music){
+        dispatchSelectedMusic("musicSelected", music)
     }
 
     onMount(async () => {
-        await handleGetAllUsers();
+        await handleGetAllMusic();
     });
 
 </script>
 
-<h1>Users List</h1>
-<ul>
-    {#each allUsers as user}
+<h1>Music List</h1>
+<ul>    
+    {#each allMusic as music}
         <li>
-            <button on:click={() => handleSelectUser(user)}>{user.userName} - {user.email}</button>
+            <button on:click={() => handleSelectMusic(music.music)}>{music.music.artist} - {music.music.albumTitle}</button>
         </li>
     {/each}
 </ul>
@@ -55,7 +53,6 @@
 
     li {
         margin-bottom: 10px;
-        word-break: break-word;
     }
 
     button {

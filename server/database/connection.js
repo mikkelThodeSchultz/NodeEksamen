@@ -10,7 +10,7 @@ export default{
   database: db,
   users: db.collection("users"),
   music: db.collection("music"),
-  shows: db.collection("shows"),
+  show: db.collection("show"),
   comments: db.collection("comments"),
   chatMessages: db.collection("chatMessages"),
   resetCollection: db.collection("resetCollection")

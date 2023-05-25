@@ -3,46 +3,43 @@
     import { BASE_URL } from "../../stores/globalStore";
     import { createEventDispatcher } from "svelte";
 
-    const dispatchSelectedMusic = createEventDispatcher();
-    let allMusic = [];
+    const dispatchSelectedShow = createEventDispatcher();
+    let allShows = [];
 
-    const handleGetAllMusic = async () => {
-        try {
-            const response = await fetch($BASE_URL + '/api/allMusic', {
+    const handleGetShows = async () => {
+        try{
+            const response = await fetch ($BASE_URL + '/api/shows', {
                 method: 'GET',
                 credentials: 'include',
             });
             const result = await response.json();
-            result.data.forEach(music => {
-                let musicFromServer = music.music;
-                allMusic = [... allMusic, musicFromServer];
-            })
+            allShows = allShows.concat(result.data);
         }catch(error){
-        console.log(error);
+            console.log(error);
         }
     }
 
-    function handleSelectMusic(music){
-        dispatchSelectedMusic("musicSelected", music)
+    function handleSelectShow(show){
+        dispatchSelectedShow("showSelected", show)
     }
 
-    onMount(async () => {
-        await handleGetAllMusic();
-    });
+    onMount(async ()  => {
+        await handleGetShows();
+    })
 
 </script>
 
-<h1>Music List</h1>
+<h1>Shows List</h1>
 <ul>
-    {#each allMusic as music}
+    {#each allShows as show}
         <li>
-            <button on:click={() => handleSelectMusic(music)}>{music.artist} - {music.albumTitle}</button>
+            <button on:click={() => handleSelectShow(show.show)}>{show.show.title}</button>
         </li>
     {/each}
 </ul>
 
 <style>
-    h1 {
+        h1 {
         text-align: center;
         font-size: 24px;
         margin-bottom: 20px;
@@ -68,5 +65,4 @@
     button:hover {
     background-color: #babab9;
     }
-
 </style>

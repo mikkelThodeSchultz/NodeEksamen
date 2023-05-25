@@ -50,18 +50,17 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log("A socket connected", socket.id);
 
-    socket.on("An Admin sent a message", (data) => {
-        io.emit("An Admin message just dropped", data);
-    });
-
     socket.on("chat message to server", async message => {
         await saveMessageFromSocket(message);
         io.emit("chat message to client", message);
     });
 
+    socket.on("music comment to server", async comment => {
+        await saveCommentFromSocket(comment);
+        io.emit("music comment to client", comment);
+    })
+
 });
-
-
 
 
 
@@ -73,10 +72,14 @@ import sessionRouter from "./routers/sessionRouter.js";
 app.use(sessionRouter);
 import userRouter from "./routers/userRouter.js";
 app.use(userRouter);
-import chatRouter from "./routers/chatRouter.js"
+import chatRouter from "./routers/chatRouter.js";
 app.use(chatRouter);
-import musicRouter from "./routers/musicRouter.js"
+import musicRouter from "./routers/musicRouter.js";
 app.use(musicRouter);
+import showRouter from "./routers/showRouter.js";
+app.use(showRouter);
+import commentRouter, { saveCommentFromSocket } from "./routers/commentRouter.js"
+app.use(commentRouter);
 
 app.get("*", (req, res) => {
     res.send("<h1>404 - Not Found</h1>")

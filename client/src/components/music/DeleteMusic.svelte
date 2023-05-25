@@ -16,10 +16,9 @@
                 'Content-Type': 'application/json'
                 },
             });
-            console.log(response);
             if(response.ok){
-            toastr.success(music.albumTitle + " have been deleted")
-            dispatchMusicDelete("musicDeleted")
+                toastr.success(music.albumTitle + " have been deleted")
+                dispatchMusicDelete("musicDeleted")
             }
         } catch(error){
             toastr.warning("An unexpected error has occurred. Please try again")

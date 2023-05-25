@@ -8,24 +8,21 @@
     let allMessages = [];
     let chatMessageID;
 
-    const handleGetAllMessages = async () => {
+    const handleGetMessages = async () => {
         try {
             const response = await fetch($BASE_URL + '/api/chatMessages', {
                 method: 'GET',
                 credentials: 'include',
             });
             const result = await response.json();
-            result.data.forEach(message => {
-                let messageFromServer = message;
-                allMessages = [... allMessages, messageFromServer];
-            })
+            allMessages = allMessages.concat(result.data)
+            
         }catch(error){
-        console.log(error);
+            console.log(error);
         }
     }
 
     async function handleDeleteMessage(message){
-        console.log(message);
         chatMessageID = message._id
         try{
             const response = await fetch ($BASE_URL + `/api/chatMessage/${chatMessageID}`, {
@@ -36,7 +33,7 @@
                 toastr.success("Chat message have been deleted")
                 dispatchDeleteMessage("messageDeleted");
                 allMessages = []
-                await handleGetAllMessages();
+                await handleGetMessages();
             }
         } catch(error){
             toastr.warning("An unexpected error has occurred. Please try again")
@@ -45,7 +42,7 @@
     }
 
     onMount(async () => {
-        await handleGetAllMessages();
+        await handleGetMessages();
     });
 </script>
 
@@ -93,6 +90,7 @@
         border: solid #000000;
         border-radius: 0px;
     }
+    
     #delete-message{
         word-break: keep-all;
     }

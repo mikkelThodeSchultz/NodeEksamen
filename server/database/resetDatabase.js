@@ -20,7 +20,7 @@ const shrugDemo1 = {
     artist: "Shrug",
     albumTitle: "Demo I",
     releaseDate: "January 29, 2023",
-    image: "linkTilBilledeHer",
+    embedLink: `<iframe style="border: 0; width: 350px; height: 622px;" src="https://bandcamp.com/EmbeddedPlayer/album=2276781933/size=large/bgcol=333333/linkcol=e99708/package=1797137217/transparent=true/" seamless><a href="https://dybdestegte.bandcamp.com/album/demo-i">Demo I by Shrug</a></iframe>`,
     songs: [
         {
             title: "Next to You",
@@ -40,7 +40,7 @@ const JCsvagTotal = {
     artist: "JESUM CHRISTUM",
     albumTitle: "SVAG TOTAL",
     releaseDate: "February 24, 2023",
-    image: "linkTilBilledeHer",
+    embedLink: `<iframe style="border: 0; width: 350px; height: 655px;" src="https://bandcamp.com/EmbeddedPlayer/album=3556587808/size=large/bgcol=333333/linkcol=e99708/package=3653272819/transparent=true/" seamless><a href="https://dybdestegte.bandcamp.com/album/svag-total">SVAG TOTAL by JESUM CHRISTUM</a></iframe>`,
     songs: [
         {
             title: "SLIP",
@@ -62,21 +62,35 @@ const JCsvagTotal = {
 }
 
 const comment1 = {
-    author: "navn på person der har skrevet",
-    date: "dato: d. 13-12-23",
-    tekst: "Det her er en kommentar om hvor fedt jeg syntes det her band her!!",
-    likes: "hvor mange likes kommentaren har"
+    userName: "navn på person der har skrevet",
+    timeStamp: "dato: d. 13-12-23",
+    comment: "Det her er en kommentar om hvor fedt jeg syntes det her band her!!"
 }
 const comment2 = {
-    author: "En anden person der har skrevet",
-    date: "dato: d. 23-12-22",
-    tekst: "Det her band sutter!",
-    likes: "ingen likes til ham her"
+    userName: "En anden person der har skrevet",
+    timeStamp: "dato: d. 23-12-22",
+    comment: "Det her band sutter!"
 }
 
-const createComments = await db.comments.insertMany([
-    comment1, comment2
-]);
+const show1 = {
+    title: "Roskilde Festival 2023 - Mr. Jones åbner Orange",
+    date: "d. 25-06-23",
+    location: "Roskilde",
+    description: "Mr. Jones kommer og åbner op for Roskilde festival, med sit trofaste crew og den gode stemning",
+    image: "linktilbillede",
+    event: "linktilevent",
+}
+const show2 = {
+    title: "Copenhell 2024 - SHRUG LAVE DØD OG ØDELÆGGELSE PÅ DEN STORE SCENE",
+    date: "d. 24-12-24",
+    location: "Ræffen",
+    description: "SHRUG ER MEGET BEDRE END METALLICA, HAN KOMMER OG FORTÆLLER DIG DET",
+    image: "linktilbillede",
+    event: "linktilevent"
+}
+
+const createShow = await db.show.insertMany([show1, show2]);
+
 const createMusic = await db.music.insertMany([
     shrugDemo1, JCsvagTotal
 ]);
@@ -84,12 +98,3 @@ const createResetCollection = await db.resetCollection.insertOne({userID: "testU
 const createUsers = await db.users.insertMany([
     createAdam, createMik, createKev, createAdmin
 ]);
-
-
-
-
-// users: db.collection("users"),
-// bands: db.collection("music"),
-// shows: db.collection("shows"),
-// comments: db.collection("comments"),
-// resetCollection: db.collection("resetCollection")

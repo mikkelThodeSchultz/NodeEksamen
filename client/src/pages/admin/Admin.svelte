@@ -1,11 +1,13 @@
 <script>
-    import ChatMessageList from "../../components/chatMessageList/ChatMessageList.svelte";
-    import CreateMusic from "../../components/musicList/CreateMusic.svelte";
-    import DeleteMusic from "../../components/musicList/DeleteMusic.svelte";
-    import MusicList from "../../components/musicList/MusicList.svelte";
-    import DeleteUser from "../../components/userList/DeleteUser.svelte";
-    import UpdateUser from "../../components/userList/UpdateUser.svelte";
-    import UserList from "../../components/userList/UserList.svelte";
+    import ChatMessageList from "../../components/chatMessage/DeleteChatMessage.svelte";
+    import CreateMusic from "../../components/music/CreateMusic.svelte";
+    import DeleteMusic from "../../components/music/DeleteMusic.svelte";
+    import MusicList from "../../components/music/MusicList.svelte";
+    import DeleteShow from "../../components/show/DeleteShow.svelte";
+    import ShowList from "../../components/show/ShowList.svelte";
+    import DeleteUser from "../../components/user/DeleteUser.svelte";
+    import UpdateUser from "../../components/user/UpdateUser.svelte";
+    import UserList from "../../components/user/UserList.svelte";
 
 
 
@@ -14,14 +16,17 @@
     // RUD Users
     // CRUD shows (mangler backend og frontend)
     // måske Delete comments (mangler backend og frontend)
+
     let showModalUsers = false;
     let showModalMusic = false;
+    let showModalShow = false;
     let showModalChatMessages = false;
     let showModalUpdateUser = false;
     let showModalDeleteUser = false;
     let selectedUser = null;
     let selectedMusic = null;
     let selectedChatMessage = null;
+    let selectedShow = null;
     let isDeleteButton = true;
     let isMusicList = true;
 
@@ -34,13 +39,18 @@
     function openModalChatMessage(){
         showModalChatMessages = true;
     }
+    function openModalShow(){
+        showModalShow = true;
+    }
     function closeModal() {
         showModalUsers = false;
         showModalMusic = false;
         showModalChatMessages = false;
+        showModalShow = false;
         showModalUpdateUser = false;
         showModalDeleteUser = false;
         selectedChatMessage = null;
+        selectedShow = null;
         selectedUser = null;
         selectedMusic = null;
         isDeleteButton = true;
@@ -52,9 +62,10 @@
     function handleSelectedMusic(event) {
         selectedMusic = event.detail;
     }
-    function handleSelectedChatMessage(event) {
-        selectedChatMessage = event.detail
+    function handleSelectedShow(event) {
+        selectedShow = event.detail;
     }
+
     function toggleDeleteButton(){
         if (isDeleteButton){
         isDeleteButton = false;
@@ -77,6 +88,7 @@
 <h1>Admin Page</h1>
 <button on:click={() => openModalUsers()}>Users</button>
 <button on:click={() => openModalMusic()}>Music</button>
+<button on:click={() => openModalShow()}>Shows</button>
 <button on:click={() => openModalChatMessage()}>Chat Messages</button>
 
 {#if showModalUsers && !selectedUser}
@@ -119,7 +131,7 @@
 {#if selectedMusic}
     <div class="modal">
         <div class="modal-content">
-                <DeleteMusic music={selectedMusic} on:musicDeleted={closeModal}/>
+            <DeleteMusic music={selectedMusic} on:musicDeleted={closeModal}/>
             <button class="close-button" on:click={closeModal}>
                 Close
             </button>   
@@ -127,10 +139,34 @@
     </div>
 {/if}
 
-{#if showModalChatMessages && !selectedChatMessage}
+{#if showModalShow && !selectedShow}
     <div class="modal">
         <div class="modal-content"> 
-            <ChatMessageList on:messageSelected={handleSelectedChatMessage} />     
+                <ShowList  on:showSelected={handleSelectedShow} />    
+            <button class="close-button" on:click={closeModal}>
+                Close
+            </button>
+        </div>
+    </div>
+{/if}
+{#if selectedShow}
+    <div class="modal">
+        <div class="modal-content">
+            <DeleteShow show={selectedShow} on:showDeleted={closeModal}/>            
+            <button class="close-button" on:click={closeModal}>
+                Close
+            </button>   
+        </div>
+    </div>
+{/if}
+
+
+
+
+{#if showModalChatMessages}
+    <div class="modal">
+        <div class="modal-content"> 
+            <ChatMessageList/>     
             <button class="close-button" on:click={closeModal}>
                 Close
             </button>
@@ -156,5 +192,9 @@
         width: 300px;
         max-height: 80vh;
         overflow-y: auto; 
+    }
+
+    h1{
+        margin-top: 5vh;
     }
 </style>

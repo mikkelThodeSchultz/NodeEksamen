@@ -5,7 +5,6 @@
     import Signup from "./Signup.svelte";
     import NotFound from "../not-found/NotFound.svelte";
     import Signout from "./Signout.svelte";
-    import AdminSendPopup from "../../components/adminSendPopup/AdminSendPopup.svelte";
     import { onMount } from "svelte";
     import Home from "../home/Home.svelte";
     import DybdestegteBookings from "../dybdestegte-bookings/DybdestegteBookings.svelte";
@@ -13,9 +12,6 @@
     import { BASE_URL, loggedInUser, userRole } from "../../stores/globalStore";
     import { initializeSocket } from "../../socketManager/socketManager.js";
     import Chat from "../chat/Chat.svelte";
-    import MusicList from "../../components/musicList/MusicList.svelte";
-    import ChatMessageList from "../../components/chatMessageList/ChatMessageList.svelte";
-    import UserList from "../../components/userList/UserList.svelte";
     import Admin from "../admin/Admin.svelte";
 
 
@@ -83,7 +79,6 @@
                 </Link>
             {#if $loggedInUser}
                 <Signout/>
-                <Link to="/admin">Admin</Link>
                 <Link to="/chat">Group chat</Link>
             {:else}
                 <img src="" alt="Login" on:click={openModalLogin} on:keydown={openModalLogin}>
@@ -91,7 +86,7 @@
                 
             {/if}
             {#if $userRole === "Admin"}
-                <Link to = "/adminmessage">Admin send message</Link>
+                <Link to="/admin">Admin</Link>
             {/if}
 
             {#if showModalLogin}
@@ -127,9 +122,6 @@
         
         </nav>
 
-        <!--DEN HER SKAL KUN VÆRE FOR ADMINS-->
-        <Route path ="/admin"><Admin/></Route>
-
 
         <Route path="/"><Home/></Route>
         {#if  $loggedInUser}
@@ -138,10 +130,7 @@
         <Route path="/dybdestegterecords" ><DybdestegteRecords/></Route>
         <Route path="/dybdestegtebookings" ><DybdestegteBookings/></Route>
         {#if $userRole === "Admin"}
-        <Route path = "/adminallmusic"><MusicList/></Route>
-        <Route path = "/adminallmessage"><ChatMessageList/></Route>
-        <Route path = "/adminallusers"><UserList/></Route>
-        <Route path = "/adminmessage" ><AdminSendPopup/></Route>
+        <Route path ="/admin"><Admin/></Route>
         {/if}
         <Route path="*"><NotFound/></Route>
     </Router>

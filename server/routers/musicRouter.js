@@ -28,7 +28,7 @@ router.post("/api/music", isAdmin, async (req, res) => {
             artist: req.body.artist,
             albumTitle: req.body.albumTitle,
             releaseDate: req.body.releaseDate,
-            image: req.body.image,
+            embedLink: req.body.embedLink,
             songs: req.body.songs
         }
         await db.music.insertOne(newMusicProject);

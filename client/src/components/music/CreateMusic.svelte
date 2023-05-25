@@ -8,7 +8,7 @@
     let artist = "";
     let albumTitle = "";
     let releaseDate = "";
-    let image = "";
+    let embedLink = "";
     let songs = [];
 
     function openModalCreateMusic(){
@@ -17,7 +17,7 @@
     }
 
     async function hanldeCreateMusic(){
-        if(!artist || !albumTitle || !releaseDate || !image || !songs){
+        if(!artist || !albumTitle || !releaseDate || !embedLink || !songs){
             toastr.warning("Please fill out all the fields")
             return;
         }
@@ -25,7 +25,7 @@
             artist: artist,
             albumTitle: albumTitle,
             releaseDate: releaseDate,
-            image: image,
+            embedLink: embedLink,
             songs: songs
         }
         try {
@@ -73,8 +73,8 @@
         <input type="text" placeholder="Enter album title" bind:value={albumTitle}/>
         <labels>Release Date</labels>
         <input type="text" placeholder="Enter release date" bind:value={releaseDate}/>
-        <labels>Image</labels>
-        <input type="text" placeholder="Enter image url" bind:value={image}/>
+        <labels>Embed Link</labels>
+        <input type="text" placeholder="Enter embed link" bind:value={embedLink}/>
 
         <div class="song-container">
             <p>Songs</p>
