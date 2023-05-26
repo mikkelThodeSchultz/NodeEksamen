@@ -20,6 +20,7 @@ const shrugDemo1 = {
     artist: "Shrug",
     albumTitle: "Demo I",
     releaseDate: "January 29, 2023",
+    description: "Shrug er kommet for at dominere dig og din verden",
     embedLink: `<iframe style="border: 0; width: 350px; height: 622px;" src="https://bandcamp.com/EmbeddedPlayer/album=2276781933/size=large/bgcol=333333/linkcol=e99708/package=1797137217/transparent=true/" seamless><a href="https://dybdestegte.bandcamp.com/album/demo-i">Demo I by Shrug</a></iframe>`,
     songs: [
         {
@@ -40,6 +41,7 @@ const JCsvagTotal = {
     artist: "JESUM CHRISTUM",
     albumTitle: "SVAG TOTAL",
     releaseDate: "February 24, 2023",
+    description: "JC er kommet for at dominere dig og din verden",
     embedLink: `<iframe style="border: 0; width: 350px; height: 655px;" src="https://bandcamp.com/EmbeddedPlayer/album=3556587808/size=large/bgcol=333333/linkcol=e99708/package=3653272819/transparent=true/" seamless><a href="https://dybdestegte.bandcamp.com/album/svag-total">SVAG TOTAL by JESUM CHRISTUM</a></iframe>`,
     songs: [
         {

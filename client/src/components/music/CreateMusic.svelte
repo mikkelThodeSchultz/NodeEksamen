@@ -9,7 +9,8 @@
     let albumTitle = "";
     let releaseDate = "";
     let embedLink = "";
-    let songs = [];
+    let description = "";
+
 
     function openModalCreateMusic(){
         showModalCreateMusic = true;
@@ -17,16 +18,17 @@
     }
 
     async function hanldeCreateMusic(){
-        if(!artist || !albumTitle || !releaseDate || !embedLink || !songs){
+        if(!artist || !albumTitle || !releaseDate || !embedLink || !description){
             toastr.warning("Please fill out all the fields")
             return;
         }
+        
         const newMusic = {
             artist: artist,
             albumTitle: albumTitle,
             releaseDate: releaseDate,
             embedLink: embedLink,
-            songs: songs
+            description: description
         }
         try {
         await  fetch($BASE_URL + '/api/music', {
@@ -45,21 +47,6 @@
             }
     }
 
-    function addSong() {
-        let newSong = {title: "", length: ""}
-        songs = [...songs, newSong];
-    }
-
-    function removeSong(index) {
-    const updatedSongs = [];
-        for (let i = 0; i < songs.length; i++) {
-            if (i !== index) {
-                updatedSongs.push(songs[i]);
-            }
-        }
-        songs = updatedSongs;
-    }
-
 </script>
 
 {#if !showModalCreateMusic}
@@ -75,32 +62,14 @@
         <input type="text" placeholder="Enter release date" bind:value={releaseDate}/>
         <labels>Embed Link</labels>
         <input type="text" placeholder="Enter embed link" bind:value={embedLink}/>
-
-        <div class="song-container">
-            <p>Songs</p>
-            {#each songs as song, i}
-                <div class="song">
-                    <labels>Title</labels>
-                    <input type="text" placeholder="Enter song title" bind:value={song.title}/>
-
-                    <labels>Length</labels>
-                    <input type="text" placeholder="Enter song lenght" bind:value={song.length}/>
-
-                    <button type="button" on:click={() => removeSong(i)}>Remove</button>
-                </div>
-            {/each}
-        </div>
-
-        <button type="button" on:click={addSong}>Add Song</button>
+        <labels>Description</labels>
+        <textarea rows="10" placeholder="Enter description" bind:value={description}/>
         <button type="submit">Submit</button>
     </form>
 {/if}
 
 <style>
-    .song-container {
-        max-height: 200px;
-        overflow-y: auto; 
-    }
+
 
     form {
     display: flex;
@@ -112,7 +81,7 @@
     background-color: gold;
     }
     
-    input {
+    input, textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;

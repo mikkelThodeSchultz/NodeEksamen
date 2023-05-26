@@ -47,6 +47,7 @@
                     musicId: comment.musicId
                 }
                 comments = [...comments, commentFromServer];
+                comments.reverse();
             })
         }catch(error){
             console.log(error);
@@ -75,26 +76,18 @@
                     time: `${date}`,
                     musicId: recievedComment.musicId
             }
-            comments = [...comments, shownComment];
-            scrollToBottom();
+            comments = [shownComment, ...comments];
+            scrollToTop();
         })
         await handleGetAllMusic();
         await handleGetComments();
-        await scrollToBottomOnLoad();
         
     });
 
-    async function scrollToBottomOnLoad() {
-        for (let i = 0; i < allMusic.length; i++){
-            selectedDiv = commentsDivs[i];
-            selectedDiv.scrollTop = selectedDiv.scrollHeight;
-        }
-    }
-
-    async function scrollToBottom() {
+    async function scrollToTop() {
         await tick();
         if(selectedDiv) {
-            selectedDiv.scrollTop = selectedDiv.scrollHeight;
+            selectedDiv.scrollTop = 0
         }
     }
 
@@ -105,18 +98,33 @@
 
 
 
-<h1>DET HER ER RECORDS</h1>
 
-
+<div class="wrapper">
 {#each allMusic as music, index}
     <div class="music-container">
-            <BandcampPlayer embedLink={music.music.embedLink}/>    
-            <div class="music-details">
-                <p>Artist: {music.music.artist}</p>
-                <p>Album: {music.music.albumTitle}</p>
-                <p>Release date: {music.music.releaseDate}</p>
-            </div>
-            <div class="comments-form-container">
+        <div class="player">
+            <BandcampPlayer embedLink={music.music.embedLink}/>
+        </div>
+            <div class="music-description">
+                <h1>{music.music.artist}</h1>
+                <h2>{music.music.albumTitle}</h2>
+                <p>{music.music.releaseDate}</p>
+                <p>{music.music.description}</p>
+            </div>   
+                <div class="comments-form-container">
+                <div class="comments-form">
+                    <form on:submit|preventDefault="{() => handleSendComment(music.music._id, index)}">
+                        <div>
+                            <textarea rows="3" cols="50" placeholder="Leave a comment..." bind:value="{commentIndexer[index]}"/>
+                        </div>
+                        {#if $loggedInUser}
+                            <button type="submit">Comment</button>
+                        {:else}
+                            <p>Sign in to comment</p>
+                        {/if}
+                        
+                    </form>
+                </div>
                 <div class="comments" bind:this={commentsDivs[index]}>
                     {#each comments as {comment, time, musicId}}
                         {#if music.music._id === musicId}
@@ -127,56 +135,58 @@
                         {/if}
                     {/each}
                 </div>
-
-        <form on:submit|preventDefault="{() => handleSendComment(music.music._id, index)}">
-            <h2>Leave a Comment</h2>
-            <div>
-                <input type="text" bind:value="{commentIndexer[index]}"/>
             </div>
-            {#if $loggedInUser}
-                <button type="submit">Submit</button>
-            {:else}
-                <p>Sign in to comment</p>
-            {/if}
-            
-        </form>
-
-        </div>
+        
     </div>
 {/each}
-
+</div>
 <style>
     .music-container {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 6vh;
-    padding: 10px;
+        display: grid;
+        padding: 30px;
+        padding-top: 50px;
+        grid-template-areas: "player description description"
+                            "player leave-comment leave-comment"
+                            "player comments comments";
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: auto 1fr auto;
+        grid-gap: 5px;
+        
     }
 
-    .music-details {
-    margin-left: 10px;
+    .comments-form-container{
+        align-self: self-end;
+        padding-right: 50px;
     }
 
-    .music-details p {
-    margin: 0;
-    }
-
-    .comments-form-container {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
+    .player{
+        margin: 0 auto;
+        grid-area: player;
     }
 
     .comments {
-    flex-grow: 1;
-    max-height: 40vh;
-    overflow-y: auto;
+        grid-area: comments;
+        height: 30vh;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .music-description {
+        grid-area: description;
+        padding-right: 50px;
+        
+    }
+
+    .comments-form{
+        grid-area: leave-comment;
     }
 
     .comment {
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #ccc;
+    background-color: rgba(0, 0, 0, 0.2);
     }
 
     .comment-text {
@@ -194,10 +204,12 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
     }
 
-    form h2 {
+    form {
     margin-top: 0;
+    color: white;
     }
 
     form div {
@@ -206,6 +218,26 @@
 
     form button {
     padding: 5px 10px;
+    }
+
+    textarea {
+        background-color:rgba(0, 0, 0, 0.1);
+        color: white;
+        border: 1px solid #ccc;
+    }
+
+    .wrapper{
+        background-image: url("../../images/backgrounds/church.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        background-attachment: fixed;
+        background-color: rgba(0, 0, 0, 0.2);
+        background-blend-mode: multiply;
+    }
+
+    p, h1, h2{
+        color: white;
     }
 
 </style>

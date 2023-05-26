@@ -29,7 +29,8 @@ router.post("/api/music", isAdmin, async (req, res) => {
             albumTitle: req.body.albumTitle,
             releaseDate: req.body.releaseDate,
             embedLink: req.body.embedLink,
-            songs: req.body.songs
+            songs: req.body.songs,
+            description: req.body.description
         }
         await db.music.insertOne(newMusicProject);
         return res.status(200).send({message: "Project have been saved"})
