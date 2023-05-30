@@ -79,7 +79,7 @@ const show1 = {
     date: "d. 25-06-23",
     location: "Roskilde",
     description: "Mr. Jones kommer og åbner op for Roskilde festival, med sit trofaste crew og den gode stemning",
-    image: "linktilbillede",
+    image: "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/031.JPG",
     event: "linktilevent",
 }
 const show2 = {
@@ -87,7 +87,7 @@ const show2 = {
     date: "d. 24-12-24",
     location: "Ræffen",
     description: "SHRUG ER MEGET BEDRE END METALLICA, HAN KOMMER OG FORTÆLLER DIG DET",
-    image: "linktilbillede",
+    image: "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/007.JPG",
     event: "linktilevent"
 }
 

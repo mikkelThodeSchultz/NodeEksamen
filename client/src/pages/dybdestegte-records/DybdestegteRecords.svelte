@@ -81,7 +81,6 @@
         })
         await handleGetAllMusic();
         await handleGetComments();
-        
     });
 
     async function scrollToTop() {
@@ -90,10 +89,6 @@
             selectedDiv.scrollTop = 0
         }
     }
-
-
-    
-
 </script>
 
 
@@ -227,7 +222,7 @@
     }
 
     .wrapper{
-        background-image: url("../../images/backgrounds/church.jpg");
+        background-image: url("https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/church.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         width: 100%;

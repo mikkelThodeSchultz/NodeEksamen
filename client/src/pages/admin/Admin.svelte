@@ -1,14 +1,17 @@
 <script>
-    import ChatMessageList from "../../components/chatMessage/DeleteChatMessage.svelte";
+    import DeleteChatMessage from "../../components/chatMessage/DeleteChatMessage.svelte";
     import CreateMusic from "../../components/music/CreateMusic.svelte";
     import DeleteMusic from "../../components/music/DeleteMusic.svelte";
+    import CreateShow from "../../components/show/CreateShow.svelte";
     import MusicList from "../../components/music/MusicList.svelte";
     import DeleteShow from "../../components/show/DeleteShow.svelte";
     import ShowList from "../../components/show/ShowList.svelte";
     import DeleteUser from "../../components/user/DeleteUser.svelte";
     import UpdateUser from "../../components/user/UpdateUser.svelte";
     import UserList from "../../components/user/UserList.svelte";
-
+    import DeleteComment from "../../components/comment/DeleteComment.svelte";
+    import toastr from "toastr";
+    import { BASE_URL } from "../../stores/globalStore";
 
 
     // Delete message
@@ -23,12 +26,15 @@
     let showModalChatMessages = false;
     let showModalUpdateUser = false;
     let showModalDeleteUser = false;
+    let showModalComments = false;
     let selectedUser = null;
     let selectedMusic = null;
     let selectedChatMessage = null;
     let selectedShow = null;
     let isDeleteButton = true;
     let isMusicList = true;
+    let isShowList = true;
+    let imageFile;
 
     function openModalUsers() {
         showModalUsers = true;
@@ -42,11 +48,15 @@
     function openModalShow(){
         showModalShow = true;
     }
+    function openModalComment(){
+        showModalComments = true;
+    }
     function closeModal() {
         showModalUsers = false;
         showModalMusic = false;
         showModalChatMessages = false;
         showModalShow = false;
+        showModalComments = false;
         showModalUpdateUser = false;
         showModalDeleteUser = false;
         selectedChatMessage = null;
@@ -55,6 +65,7 @@
         selectedMusic = null;
         isDeleteButton = true;
         isMusicList = true;
+        isShowList = true;
     }
     function handleSelectedUser(event) {
         selectedUser = event.detail;
@@ -80,17 +91,52 @@
             isMusicList = true;
         }
     }
-    
+    function toggleShowList(){
+        if (isShowList){
+            isShowList = false;
+        } else {
+            isShowList = true;
+        }
+    }
 
-</script>
+    async function handleUploadImage(){
+    if (!imageFile) {
+        toastr.warning("Please select an image");
+        return;
+    }
 
+    const formData = new FormData();
+    formData.append('image', imageFile[0]);
 
-<h1>Admin Page</h1>
-<button on:click={() => openModalUsers()}>Users</button>
-<button on:click={() => openModalMusic()}>Music</button>
-<button on:click={() => openModalShow()}>Shows</button>
-<button on:click={() => openModalChatMessage()}>Chat Messages</button>
+    fetch($BASE_URL + '/api/upload', {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            toastr.success("Image uploaded successfully");
+        } else {
+            toastr.error("Failed to upload image");
+        }
+    })
+    .catch(error => {
+        toastr.error("An unexpected error has occurred. Please try again");
+        console.log(error);
+    });
+}
 
+</script>   
+
+<div id="wrapper">
+    <h1>Admin Page</h1>
+    <button on:click={() => openModalUsers()}>Users</button>
+    <button on:click={() => openModalMusic()}>Music</button>
+    <button on:click={() => openModalShow()}>Shows</button>
+    <button on:click={() => openModalChatMessage()}>Chat Messages</button>
+    <button on:click={() => openModalComment()}>Comments</button>
+
+</div>
 {#if showModalUsers && !selectedUser}
     <div class="modal">
         <div class="modal-content">
@@ -120,6 +166,7 @@
         <div class="modal-content"> 
             {#if isMusicList}
                 <MusicList  on:musicSelected={handleSelectedMusic} />     
+                <hr>
             {/if}
             <CreateMusic on:create={toggleMusicList} on:musicCreated={closeModal} />
             <button class="close-button" on:click={closeModal}>
@@ -142,7 +189,11 @@
 {#if showModalShow && !selectedShow}
     <div class="modal">
         <div class="modal-content"> 
-                <ShowList  on:showSelected={handleSelectedShow} />    
+            {#if isShowList}
+                <ShowList  on:showSelected={handleSelectedShow} />   
+                <hr> 
+            {/if}
+            <CreateShow on:create={toggleShowList} on:showCreated={closeModal} />
             <button class="close-button" on:click={closeModal}>
                 Close
             </button>
@@ -160,13 +211,21 @@
     </div>
 {/if}
 
-
-
-
 {#if showModalChatMessages}
     <div class="modal">
         <div class="modal-content"> 
-            <ChatMessageList/>     
+            <DeleteChatMessage/>     
+            <button class="close-button" on:click={closeModal}>
+                Close
+            </button>
+        </div>
+    </div>
+{/if}
+
+{#if showModalComments}
+    <div class="modal">
+        <div class="modal-content"> 
+            <DeleteComment/>  
             <button class="close-button" on:click={closeModal}>
                 Close
             </button>
@@ -175,6 +234,14 @@
 {/if}
 
 <style>
+    #wrapper{
+        margin: auto;
+        padding-top: 5em;
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+    }
+
     .modal {
         position: fixed;
         top: 0;
@@ -189,12 +256,26 @@
     }
 
     .modal-content {
+        padding: 20px;
         width: 300px;
         max-height: 80vh;
         overflow-y: auto; 
+        border: solid #000000;
+        background-color: gold;
+        
+        background-image: url("../../images/backgrounds/scroll.png");
     }
 
     h1{
         margin-top: 5vh;
     }
+
+    button{
+        width: 100%;
+    }
+    hr{
+        margin-bottom: 8px;
+    }
+
+
 </style>

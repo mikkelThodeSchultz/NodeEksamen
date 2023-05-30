@@ -3,59 +3,60 @@
     import { BASE_URL } from "../../stores/globalStore";
     import toastr from "toastr";
 
-    let allMessages = [];
-    let chatMessageID;
+    let allComments = [];
+    let commentId;
 
-    const handleGetMessages = async () => {
+    const handleGetComments = async () => {
         try {
-            const response = await fetch($BASE_URL + '/api/chatMessages', {
-                method: 'GET',
+            const response = await fetch($BASE_URL + '/api/comments', {
+                method:  'GET',
                 credentials: 'include',
             });
             const result = await response.json();
-            allMessages = allMessages.concat(result.data);
-            
+            allComments = allComments.concat(result.data);
         }catch(error){
             console.log(error);
         }
     }
 
-    async function handleDeleteMessage(message){
-        chatMessageID = message._id;
+    async function handleDeleteComment(comment){
+        commentId = comment._id;
         try{
-            const response = await fetch ($BASE_URL + `/api/chatMessage/${chatMessageID}`, {
-                method: "DELETE",
-                credentials: "include"
+            const response = await fetch ($BASE_URL + `/api/comment(${commentId})`, {
+                method: 'DELETE',
+                credentials: 'include'
             });
             if(response.ok){
-                toastr.success("Chat message have been deleted")
-                allMessages = []
-                await handleGetMessages();
+                toastr.success("Comment have been deleted");
+                allComments = [];
+                await handleGetComments();
             }
-        } catch(error){
-            toastr.warning("An unexpected error has occurred. Please try again")
+        }catch(error){
+            toastr.warning("An unexpected error has occured. Please try again")
             console.log(error);
         }
     }
 
     onMount(async () => {
-        await handleGetMessages();
-    });
+        await handleGetComments();
+    })
+
 </script>
 
-<h1>Chat Message List</h1>
+<h1>Comment List</h1>
 <ul>
-    {#each allMessages as message}
-        <li class="message-item">
-            <div id="message">
-                <p>{message.userName} - {message.message}</p>
+    {#each allComments as comment}
+        <li class="comment-item">
+            <div id="comment">
+                <p>{comment.userName} - {comment.comment}</p>
             </div>
-            <div id="delete-message">
-                <button on:click={() => handleDeleteMessage(message)} >Delete</button>
+            <div id="delete-comment">
+                <button on:click={() => handleDeleteComment(comment)} >Delete</button>
             </div>
         </li>
     {/each}
 </ul>
+
 
 <style>
     h1 {
@@ -76,7 +77,7 @@
         justify-content: space-between;
     }
 
-    .message-item {
+    .comment-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -88,7 +89,7 @@
         border-radius: 0px;
     }
     
-    #delete-message{
+    #delete-comment{
         word-break: keep-all;
     }
 

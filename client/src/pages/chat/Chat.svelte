@@ -11,7 +11,12 @@
     let messageToServer = null;
     let chatMessages = [];
     let chatMessageDiv;
-    
+    let selectedBackgroundImage = "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/temple.jpg";
+    let backgroundImages = [
+        "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/church.jpg", 
+        "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/cole.jpg",
+        "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/temple.jpg"]
+    let backgroundImageIndex = 0;
     const socket = getSocket();
 
     function handleSendMessage() {
@@ -54,6 +59,7 @@
         });
         await handleGetMessages();
         scrollToBottom();
+        changeBackgroundImage();
     });
 
 
@@ -65,40 +71,64 @@
     };
 
 
+    function changeBackgroundImage() {
+        setInterval(() => {
+        selectedBackgroundImage = backgroundImages[backgroundImageIndex];
+        backgroundImageIndex ++;
+            if(backgroundImageIndex>2){
+                backgroundImageIndex = 0;
+                }
+        },5000)
+    }
+
 </script>
-
-<div class="chat-container">
-    <div class="chat-messages" bind:this={chatMessageDiv} >
-        {#each chatMessages as { message, time }}
-        <div class="chat-message">
-            <p class="chat-message-text">{message}</p>
-            <p class="chat-message-time">{time}</p>
+<div id=wrapper style="background-image: url({selectedBackgroundImage})">
+    <div class="chat-container">
+        <div class="chat-messages" bind:this={chatMessageDiv} >
+            {#each chatMessages as { message, time }}
+            <div class="chat-message">
+                <p class="chat-message-text">{message}</p>
+                <p class="chat-message-time">{time}</p>
+            </div>
+            {/each}
         </div>
-        {/each}
-    </div>
 
 
-    <div class="chat-input">
-        <input type="text" bind:value={message} placeholder="Type your message..." />
-        <button on:click|preventDefault={handleSendMessage}>Send</button>
+        <div class="chat-input">
+            <input type="text" bind:value={message} placeholder="Type your message..." />
+            <button on:click|preventDefault={handleSendMessage} >Send</button>
+        </div>
     </div>
 </div>
 
-
 <style>
 
+#wrapper{
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    background-attachment: fixed;
+    background-color: rgba(0, 0, 0, 0.2);
+    background-blend-mode: multiply;
+    transition: background-image 0.5s ease;
+}
+
 .chat-container {
-    margin-top: 5em;
+    margin: auto;
+    padding-top: 5em;
     display: flex;
     flex-direction: column;
-    height: 80vh;
-    max-width: 800px;
+    height: 90vh;
+    max-width: 900px;
+    
 }
 
 .chat-messages {
     flex-grow: 1;
     overflow:auto;
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(0, 0, 0,0.4);
+    border: 1px solid #ccc;
     width: 100%;
 }
 
@@ -107,6 +137,7 @@
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 8px;
+    
 }
 
 .chat-message-time{
@@ -128,10 +159,17 @@
     flex-grow: 1;
     padding: 8px;
     margin-right: 8px;
-}
+    background-color:rgba(0, 0, 0, 0.4);
+    color: white;
+    border: 1px solid #ccc;
 
-.chat-input button {
-    padding: 8px 16px;
+}
+button {
+    padding: 5px 20px;
+    }
+
+p{
+    color: white;
 }
 
 

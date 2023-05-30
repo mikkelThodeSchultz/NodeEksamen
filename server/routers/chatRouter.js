@@ -55,6 +55,14 @@ router.delete("/api/chatMessage/:id", isAdmin, async (req, res) => {
     }
 });
 
+export async function deleteAllChatMessages(){
+    try{
+        await db.chatMessages.deleteMany({});
+    }catch(error){
+        console.log(error);
+    }
+}
+
 export async function saveMessageFromSocket(message){
     try{
     await db.chatMessages.insertOne(message);

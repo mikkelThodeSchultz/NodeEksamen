@@ -1,6 +1,8 @@
 import dotenv from "dotenv/config";
 import express from "express";
-import { saveMessageFromSocket } from "./routers/chatRouter.js";
+import { saveMessageFromSocket, deleteAllChatMessages } from "./routers/chatRouter.js";
+import cron from "node-cron";
+import multer from "multer";
 
 const app = express();
 app.use(express.json());
@@ -62,8 +64,6 @@ io.on("connection", (socket) => {
 
 });
 
-
-
 import authRouter from "./routers/authRouter.js";
 app.use(authRouter);
 import forgotPasswordRouter from "./routers/forgotPasswordRouter.js";
@@ -78,11 +78,17 @@ import musicRouter from "./routers/musicRouter.js";
 app.use(musicRouter);
 import showRouter from "./routers/showRouter.js";
 app.use(showRouter);
-import commentRouter, { saveCommentFromSocket } from "./routers/commentRouter.js"
+import commentRouter, { saveCommentFromSocket } from "./routers/commentRouter.js";
 app.use(commentRouter);
+import uploadImageRouter from "./routers/uploadImageRouter.js";
+app.use(uploadImageRouter);
 
 app.get("*", (req, res) => {
     res.send("<h1>404 - Not Found</h1>")
+});
+
+cron.schedule('0 0 * * 0', () => {
+    deleteAllChatMessages();
 });
 
 const PORT = process.env.PORT || 8080;

@@ -10,7 +10,14 @@
     let releaseDate = "";
     let embedLink = "";
     let description = "";
-
+    
+    function inputValidation(embeddedLink){
+        const regex = /^<iframe\s.*src="https:\/\/bandcamp\.com\/EmbeddedPlayer\/.*<\/iframe>$/;
+        if (regex.test(embeddedLink)) {
+            return true;
+        }
+        return false;
+    }
 
     function openModalCreateMusic(){
         showModalCreateMusic = true;
@@ -22,6 +29,11 @@
             toastr.warning("Please fill out all the fields")
             return;
         }
+        if(!inputValidation(embedLink)){
+            toastr.warning("Embedded link does not match critearias")
+            return;
+        }
+
         
         const newMusic = {
             artist: artist,
@@ -63,23 +75,12 @@
         <labels>Embed Link</labels>
         <input type="text" placeholder="Enter embed link" bind:value={embedLink}/>
         <labels>Description</labels>
-        <textarea rows="10" placeholder="Enter description" bind:value={description}/>
+        <textarea rows="6" placeholder="Enter description" bind:value={description}/>
         <button type="submit">Submit</button>
     </form>
 {/if}
 
 <style>
-
-
-    form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 300px;
-    padding: 20px;
-    border: solid #000000;
-    background-color: gold;
-    }
     
     input, textarea {
     width: 100%;
@@ -90,9 +91,6 @@
     
     button {
     width: 100%;
-    padding: 10px;
-    cursor: pointer;
-    border: solid #000000;
-    border-radius: 0px;
+    margin-bottom: 10px;
     }
 </style>

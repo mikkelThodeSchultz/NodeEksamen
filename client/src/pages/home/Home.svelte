@@ -40,11 +40,11 @@
     }
 
     .left{
-        background-image: url("../../images/backgrounds/church.jpg");
+        background-image: url("https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/church.jpg");
         
     }
     .right{
-        background-image: url("../../images/backgrounds/cole.jpg");
+        background-image: url("https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/cole.jpg");
     
     }
     #wrapper {
