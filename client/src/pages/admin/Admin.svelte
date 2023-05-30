@@ -262,8 +262,6 @@
         overflow-y: auto; 
         border: solid #000000;
         background-color: gold;
-        
-        background-image: url("../../images/backgrounds/scroll.png");
     }
 
     h1{

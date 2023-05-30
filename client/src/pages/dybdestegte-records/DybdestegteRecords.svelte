@@ -139,14 +139,13 @@
     .music-container {
         display: grid;
         padding: 30px;
-        padding-top: 50px;
+        padding-top: 3%;
         grid-template-areas: "player description description"
                             "player leave-comment leave-comment"
                             "player comments comments";
         grid-template-columns: 1fr 2fr;
         grid-template-rows: auto 1fr auto;
         grid-gap: 5px;
-        
     }
 
     .comments-form-container{
@@ -229,6 +228,7 @@
         background-attachment: fixed;
         background-color: rgba(0, 0, 0, 0.2);
         background-blend-mode: multiply;
+        padding-top: 4%;
     }
 
     p, h1, h2{

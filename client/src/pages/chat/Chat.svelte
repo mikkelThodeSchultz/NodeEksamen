@@ -116,7 +116,7 @@
 
 .chat-container {
     margin: auto;
-    padding-top: 5em;
+    padding-top: 8em;
     display: flex;
     flex-direction: column;
     height: 90vh;

@@ -2,6 +2,7 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
+  font-family: 'Trirong', serif;
 }
 html{
   margin: 0 auto;
@@ -22,11 +23,6 @@ ul{
 
 a:hover {
   -webkit-text-stroke: 0.1px gold;
-}
-
-#app {
-  /* max-width: 1280px; */
-  /* padding: 2rem; */
 }
 
 button {

@@ -74,53 +74,57 @@
 {#if isSessionDataLoaded}
     <Router>
         <nav>
-                <Link to="/">
-                    <img src="" alt="Home">
-                </Link>
+            <Link to="/" class="navbar-link">
+                <img src="https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/home.png" alt="Home">
+            </Link>
             {#if $loggedInUser}
                 <Signout/>
-                <Link to="/chat">Group chat</Link>
+                <Link to="/chat" class="navbar-link">
+                    <img src="https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/chat.png" alt="Chat">
+                </Link>
             {:else}
-                <img src="" alt="Login" on:click={openModalLogin} on:keydown={openModalLogin}>
-                <img src="" alt="Signup" on:click={openModalSignup} on:keydown={openModalSignup}>
-                
-            {/if}
+                <img src="https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/login.png" alt="Login" on:click={openModalLogin} on:keydown={openModalLogin} class="navbar-link">
+                <img src="https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/signup.png" alt="Signup" on:click={openModalSignup} on:keydown={openModalSignup} class="navbar-link">
+            {/if}   
             {#if $userRole === "Admin"}
-                <Link to="/admin">Admin</Link>
-            {/if}
+                <Link to="/admin" class="navbar-link">
+                    <img src="https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/admin.png" alt="Admin">
+                </Link>
 
-            {#if showModalLogin}
-                <div class="modal">
-                    <div class="modal-content">
-                        <Login  on:login={closeModalLogin} on:openForgotPassword={openModalForgotPassword} />
-                        <button class="close-button" on:click={closeModalLogin}>
-                            Close
-                        </button>
-                    </div>
-                </div>
             {/if}
-            {#if showModalSignup}
-                <div class="modal">
-                    <div class="modal-content">
-                        <Signup  on:signup={closeModalSignup} on:alreadyHaveAccount={openModalLogin} />
-                        <button class="close-button" on:click={closeModalSignup}>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            {/if}
-            {#if showModalForgotPassword}
-                <div class="modal">
-                    <div class="modal-content">
-                        <ForgotPassword  on:changePassword={closeModalForgotPassword} />
-                        <button class="close-button" on:click={closeModalForgotPassword}>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            {/if}
-        
         </nav>
+
+        
+    {#if showModalLogin}
+        <div class="modal">
+            <div class="modal-content">
+                <Login  on:login={closeModalLogin} on:openForgotPassword={openModalForgotPassword} />
+                <button class="close-button" on:click={closeModalLogin}>
+                    Close
+                </button>
+            </div>
+        </div>
+    {/if}
+    {#if showModalSignup}
+        <div class="modal">
+            <div class="modal-content">
+                <Signup  on:signup={closeModalSignup} on:alreadyHaveAccount={openModalLogin} />
+                <button class="close-button" on:click={closeModalSignup}>
+                    Close
+                </button>
+            </div>
+        </div>
+    {/if}
+    {#if showModalForgotPassword}
+        <div class="modal">
+            <div class="modal-content">
+                <ForgotPassword  on:changePassword={closeModalForgotPassword} />
+                <button class="close-button" on:click={closeModalForgotPassword}>
+                    Close
+                </button>
+            </div>
+        </div>
+    {/if}
 
 
         <Route path="/"><Home/></Route>
@@ -144,13 +148,25 @@
     
 
 <style>
-        nav {
+
+    
+    :global(.navbar-link){
+        width: 70%;
+        justify-self: center;
+        animation: glow_item 4s infinite ease-in-out alternate;
+        transition: transform 0.3s ease-in-out;
+        
+    }
+    :global(.navbar-link):hover{
+        transform: scale(110%);
+    }
+    nav {
+        width: 100%;
+        margin-top: 1.5%;
         position: fixed;
-        top: 0;
-        left: 0;
-        margin-left: 1em;
-        margin-top: 1em;
         z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     }
 
     .modal {
@@ -174,6 +190,20 @@
         left: 0;
         width: 100%;
         height: 100%;
+    }
+
+    @keyframes glow_item {
+        0%{
+            box-shadow: 5px 1px 1px rgba(0, 0, 0, 0.6);
+        }
+        100% {
+            box-shadow: 0 0 1vw #FFFFFF, 0 0 3vw #FFFFFF, 0 0 10vw #FFFFFF, 0 0 10vw #FFFFFF, 0 0 .4vw #FED128, .4vw .3vw .1vw #806914;
+            color: #000000;
+        }
+        50% {
+            box-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #000000, 0 0 5vw #000000, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .4vw .3vw .1vw #40340A;
+            color: #806914;
+        }
     }
 
 </style>

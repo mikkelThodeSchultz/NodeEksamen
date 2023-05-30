@@ -20,9 +20,12 @@
 
 </script>
 
-<img src="" alt="Logout" on:click={handleLogout} on:keydown={handleLogout}>
+    <img src="https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/signout.png" alt="Logout" on:click={handleLogout} on:keydown={handleLogout} class="navbar-link">
+
 <style>
-img:hover{
-    cursor: pointer;
-}
+    img:hover{
+        cursor: pointer;
+    }
+
+    
 </style>

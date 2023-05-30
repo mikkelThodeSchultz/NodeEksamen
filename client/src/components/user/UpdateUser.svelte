@@ -64,17 +64,7 @@
 {/if}
 
 <style>
-    
-    form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 300px;
-    padding: 20px;
-    border: solid #000000;
-    background-color: gold;
-    }
-    
+
     input, select {
     width: 100%;
     padding: 10px;

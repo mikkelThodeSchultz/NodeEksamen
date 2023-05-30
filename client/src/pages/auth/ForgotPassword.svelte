@@ -96,7 +96,6 @@
         align-items: center;
         margin: 0;
         padding: 0;
-        font-family: 'Trirong', serif;
     }
     
     form {

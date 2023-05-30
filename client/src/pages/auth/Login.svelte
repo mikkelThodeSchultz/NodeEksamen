@@ -46,7 +46,9 @@
 
     function handleForgotPassword () {
         dispatchForgotPassword("openForgotPassword");
+        
     }
+
 
 </script>
 
