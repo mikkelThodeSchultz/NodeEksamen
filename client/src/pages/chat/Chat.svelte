@@ -15,7 +15,8 @@
     let backgroundImages = [
         "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/church.jpg", 
         "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/cole.jpg",
-        "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/temple.jpg"]
+        "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/backgrounds/temple.jpg",
+        "https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/civ.jpg"]
     let backgroundImageIndex = 0;
     const socket = getSocket();
 
@@ -74,7 +75,7 @@
         setInterval(() => {
         selectedBackgroundImage = backgroundImages[backgroundImageIndex];
         backgroundImageIndex ++;
-            if(backgroundImageIndex>2){
+            if(backgroundImageIndex>3){
                 backgroundImageIndex = 0;
                 }
         },5000)

@@ -92,13 +92,13 @@
 </script>   
 
 <div id="wrapper">
-    <h1>Admin Page</h1>
-    <button on:click={() => openModalUsers()}>Users</button>
-    <button on:click={() => openModalMusic()}>Music</button>
-    <button on:click={() => openModalShow()}>Shows</button>
-    <button on:click={() => openModalChatMessage()}>Chat Messages</button>
-    <button on:click={() => openModalComment()}>Comments</button>
-
+    <div id="admin-panel">
+        <button on:click={() => openModalUsers()}>Users</button>
+        <button on:click={() => openModalMusic()}>Music</button>
+        <button on:click={() => openModalShow()}>Shows</button>
+        <button on:click={() => openModalChatMessage()}>Chat Messages</button>
+        <button on:click={() => openModalComment()}>Comments</button>
+    </div>
 </div>
 {#if showModalUsers && !selectedUser}
     <div class="modal">
@@ -197,12 +197,24 @@
 {/if}
 
 <style>
-    #wrapper{
+
+    #admin-panel{
         margin: auto;
-        padding-top: 5em;
+        padding-top: 10em;
         display: flex;
         flex-direction: column;
         max-width: 400px;
+    }
+    #wrapper{
+        background-image: url("https://dybdestegte-bucket.s3.eu-north-1.amazonaws.com/civ.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        background-attachment: fixed;
+        background-color: rgba(0, 0, 0, 0.2);
+        background-blend-mode: multiply;
+        padding-top: 4%;
+        height: 100vh;
     }
 
     .modal {
@@ -226,11 +238,6 @@
         border: solid #000000;
         background-color: gold;
     }
-
-    h1{
-        margin-top: 5vh;
-    }
-
     button{
         width: 100%;
     }
