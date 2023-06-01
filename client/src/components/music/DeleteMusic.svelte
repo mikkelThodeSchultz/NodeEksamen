@@ -7,7 +7,7 @@
     let musicID = music._id;
 
 
-    async function handleDeleteMusic() {
+    const handleDeleteMusic = async () => {
         try{
             const response = await fetch($BASE_URL + `/api/music/${musicID}`, {
                 method: 'DELETE',

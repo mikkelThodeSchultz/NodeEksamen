@@ -19,4 +19,5 @@ const isAdmin = (req, res, next) => {
     }
     next();
 };
+
 export {isLoggedIn, isLoggedOut, isAdmin};

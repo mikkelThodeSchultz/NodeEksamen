@@ -1,11 +1,13 @@
 import dotenv from "dotenv/config";
 import express from "express";
-import { saveMessageFromSocket, deleteAllChatMessages } from "./routers/chatRouter.js";
 import cron from "node-cron";
 import multer from "multer";
 
 const app = express();
 app.use(express.json());
+
+import path from "path";
+app.use(express.static(path.resolve("../client/dist")));
 
 import cors from "cors";
 app.use(cors({
@@ -44,8 +46,7 @@ const server = http.createServer(app);
 import { Server } from "socket.io";
 const io = new Server(server, {
     cors: {
-        origin: "*", //Should be specific origin and methods in production
-        methods: ["*"]
+        origin: "http://localhost:5173"
     }
 });
 
@@ -72,7 +73,7 @@ import sessionRouter from "./routers/sessionRouter.js";
 app.use(sessionRouter);
 import userRouter from "./routers/userRouter.js";
 app.use(userRouter);
-import chatRouter from "./routers/chatRouter.js";
+import chatRouter, {saveMessageFromSocket, deleteAllChatMessages} from "./routers/chatRouter.js";
 app.use(chatRouter);
 import musicRouter from "./routers/musicRouter.js";
 app.use(musicRouter);

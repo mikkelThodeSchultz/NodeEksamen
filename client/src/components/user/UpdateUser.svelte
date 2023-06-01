@@ -16,7 +16,7 @@
         dispatchUserUpdate("update");
         showModalUpdateUser = true;
     }
-    async function handleUpdateUser(){
+    const handleUpdateUser = async () => {
         if (!username || !email){
             toastr.warning("Please fill out both username and email")
             return;

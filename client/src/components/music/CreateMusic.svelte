@@ -24,7 +24,7 @@
         dispatchMusicCreate("create")
     }
 
-    async function hanldeCreateMusic(){
+    const hanldeCreateMusic = async () => {
         if(!artist || !albumTitle || !releaseDate || !embedLink || !description){
             toastr.warning("Please fill out all the fields")
             return;

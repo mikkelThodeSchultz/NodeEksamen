@@ -7,7 +7,7 @@
     const dispatchUserDelete = createEventDispatcher();
     let userID = user._id;
 
-    async function handleDeleteUser() {
+    const handleDeleteUser = async () => {
         try{
             const response = await fetch($BASE_URL + `/api/user/${userID}`, {
                 method: "DELETE",

@@ -14,7 +14,8 @@ router.get("/api/users", async (req, res) => {
             userArray.push({_id: user._id, userName: user.userName, email: user.email, role: user.role});
         });
         return res.status(200).send({data: userArray});
-    } catch(error){
+    } 
+    catch(error){
         console.log(error);
         return res.status(500).send({message: "Server error"});
     }

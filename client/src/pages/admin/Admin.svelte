@@ -10,15 +10,6 @@
     import UpdateUser from "../../components/user/UpdateUser.svelte";
     import UserList from "../../components/user/UserList.svelte";
     import DeleteComment from "../../components/comment/DeleteComment.svelte";
-    import toastr from "toastr";
-    import { BASE_URL } from "../../stores/globalStore";
-
-
-    // Delete message
-    // CRUD Music
-    // RUD Users
-    // CRUD shows (mangler backend og frontend)
-    // måske Delete comments (mangler backend og frontend)
 
     let showModalUsers = false;
     let showModalMusic = false;
@@ -34,7 +25,6 @@
     let isDeleteButton = true;
     let isMusicList = true;
     let isShowList = true;
-    let imageFile;
 
     function openModalUsers() {
         showModalUsers = true;
@@ -98,33 +88,6 @@
             isShowList = true;
         }
     }
-
-    async function handleUploadImage(){
-    if (!imageFile) {
-        toastr.warning("Please select an image");
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('image', imageFile[0]);
-
-    fetch($BASE_URL + '/api/upload', {
-        method: 'POST',
-        credentials: 'include',
-        body: formData
-    })
-    .then(response => {
-        if (response.ok) {
-            toastr.success("Image uploaded successfully");
-        } else {
-            toastr.error("Failed to upload image");
-        }
-    })
-    .catch(error => {
-        toastr.error("An unexpected error has occurred. Please try again");
-        console.log(error);
-    });
-}
 
 </script>   
 

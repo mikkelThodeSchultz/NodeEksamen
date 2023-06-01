@@ -21,11 +21,11 @@
 
     function handleSendMessage() {
         const timeStamp = new Date();
-        messageToServer = {userName: $loggedInUser, message: message, timeStamp: timeStamp}
+        messageToServer = {userName: $loggedInUser, message: message, timeStamp: timeStamp};
         socket.emit('chat message to server', messageToServer);
         message = "";
         messageToServer = null;
-    }
+    };
 
     const handleGetMessages = async () => {
         try{
@@ -45,7 +45,7 @@
         }catch(error){
             console.log(error);
         }
-    }
+    };
     
     onMount(async () => {
     socket.on('chat message to client', (receivedMessage) => {
@@ -70,7 +70,6 @@
         }
     };
 
-
     function changeBackgroundImage() {
         setInterval(() => {
         selectedBackgroundImage = backgroundImages[backgroundImageIndex];
@@ -79,9 +78,10 @@
                 backgroundImageIndex = 0;
                 }
         },5000)
-    }
+    };
 
 </script>
+
 <div id=wrapper style="background-image: url({selectedBackgroundImage})">
     <div class="chat-container">
         <div class="chat-messages" bind:this={chatMessageDiv} >
@@ -92,7 +92,6 @@
             </div>
             {/each}
         </div>
-
 
         <div class="chat-input">
             <input type="text" bind:value={message} placeholder="Type your message..." />
@@ -111,7 +110,6 @@
     background-attachment: fixed;
     background-color: rgba(0, 0, 0, 0.2);
     background-blend-mode: multiply;
-    transition: background-image 0.5s ease;
 }
 
 .chat-container {

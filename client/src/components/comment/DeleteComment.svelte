@@ -19,12 +19,15 @@
         }
     }
 
-    async function handleDeleteComment(comment){
+    const handleDeleteComment = async (comment) => {
         commentId = comment._id;
         try{
-            const response = await fetch ($BASE_URL + `/api/comment(${commentId})`, {
+            const response = await fetch ($BASE_URL + `/api/comment/${commentId}`, {
                 method: 'DELETE',
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                'Content-Type': 'application/json'
+                },
             });
             if(response.ok){
                 toastr.success("Comment have been deleted");

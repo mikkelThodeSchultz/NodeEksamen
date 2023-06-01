@@ -18,7 +18,7 @@
         dispatchShowCreate("create")
     }
 
-    async function handleCreateShow(){
+    const handleCreateShow = async () => {
         if(!title || !date || !location || !description || !image || !event){
             toastr.warning("Please fill out all the fields")
             return;
@@ -51,7 +51,7 @@
             }
         }
 
-    async function handleUploadImage(){
+    const handleUploadImage = async () => {
 
         const formData = new FormData();
         formData.append('image', image[0]);

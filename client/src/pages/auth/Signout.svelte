@@ -4,7 +4,7 @@
     import { navigate } from "svelte-navigator";
 
 
-    function handleLogout(){
+    const handleLogout = async () => {
         fetch($BASE_URL + '/api/logout', {
             method: 'GET',
             credentials: 'include',        

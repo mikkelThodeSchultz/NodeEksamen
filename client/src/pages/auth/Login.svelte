@@ -9,40 +9,38 @@
     const dispatchLogin = createEventDispatcher();
     const dispatchForgotPassword = createEventDispatcher();
 
-    function handleLogin(){
-        if(!email || !password){
+    const handleLogin = async () => {
+        if (!email || !password) {
             toastr.warning("Please fill out both email and password");
             return;
         }
-        fetch($BASE_URL + '/auth/login', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({email: email, password: password})
-        })
-        .then(result => {
-            if(result.status===400){
-                toastr.warning("Wrong email or password")
-            }
-            if(result.status===200){
-                toastr.success("Welcome my friend!")
-                setTimeout(function() {
-                    result.json().then(data => {
+        try {
+            const response = await fetch($BASE_URL + '/auth/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            if (response.status === 400) {
+                toastr.warning("Wrong email or password");
+                }
+            if (response.status === 200) {
+                toastr.success("Welcome my friend!");
+                setTimeout(async () => {
+                    const data = await response.json();
                     loggedInUser.set(data.data.userName);
                     userRole.set(data.data.role);
                     dispatchLogin("login");
-                })
-                navigate("/");
-            }, 2000);
+                    navigate("/");
+                }, 2000);
             }
-        })
-        .catch(error => {
-            toastr.warning("An unexpected error has occurred. Please try again")
+        } catch (error) {
+            toastr.warning("An unexpected error has occurred. Please try again");
             console.error(error);
-        });
     }
+};
 
     function handleForgotPassword () {
         dispatchForgotPassword("openForgotPassword");

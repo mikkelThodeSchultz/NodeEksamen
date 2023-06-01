@@ -6,7 +6,7 @@
     const dispatchShowDelete = createEventDispatcher();
     let showID = show._id;
 
-    async function handleDeleteShow() {
+    const handleDeleteShow = async ()  => {
         try{
             const response = await fetch($BASE_URL + `/api/show/${showID}`,{
                 method: 'DELETE',

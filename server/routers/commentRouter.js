@@ -27,7 +27,7 @@ export async function saveCommentFromSocket(comment){
     }
 };
 
-router.delete("api/comment/:id", isAdmin, async (req, res) => {
+router.delete("/api/comment/:id", isAdmin, async (req, res) => {
     try{
         const id = new ObjectId(req.params.id);
         const commentToDelete = await db.comments.deleteOne({_id: id})

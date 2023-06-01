@@ -22,12 +22,10 @@ router.post("/auth/login", isLoggedOut, async (req, res) => {
             req.session.role = user[0].role;
             req.session.isUserLoggedIn = true;
             return res.status(200).send({data: req.session});
-        } else {
-            return res.status(400).send({message: "Wrong password"})
         }
     }
     else {
-        return res.status(400).send({message: "Wrong email"})
+        return res.status(400).send({message: "Wrong email or password"})
     }
     }
     catch(error){
@@ -74,8 +72,6 @@ router.post("/auth/signup", isLoggedOut, async (req, res) => {
     }
 }); 
 
-//TODO Skal måske deles op i flere endpoints
-
 router.put("/auth/password", isLoggedOut, async (req, res) => {
     try{
     if (!req.body){
@@ -93,7 +89,6 @@ router.put("/auth/password", isLoggedOut, async (req, res) => {
 
     const newPassword = req.body.newPassword;
     const hashedPassword = await bcrypt.hash(newPassword, 12);
-    await db.users.findOne({_id: new ObjectId(foundResetPassword.userID)});
     await db.users.updateOne({_id: new ObjectId(foundResetPassword.userID)}, {$set: {password: hashedPassword}});
     await db.resetCollection.deleteOne({resetCode: code});
     return res.status(200).send({message: "User updated"});

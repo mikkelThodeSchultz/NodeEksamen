@@ -8,7 +8,7 @@ router.get("/api/session", async (req, res) => {
         userRole: req.session.role,
         userName: req.session.userName
     }
-    res.json(sessionData)
+    res.json(sessionData);
 });
 
 router.get("/api/logout", isLoggedIn, async (req, res) => {

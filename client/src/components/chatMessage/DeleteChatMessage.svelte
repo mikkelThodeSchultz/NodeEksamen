@@ -20,23 +20,23 @@
         }
     }
 
-    async function handleDeleteMessage(message){
-        chatMessageID = message._id;
-        try{
-            const response = await fetch ($BASE_URL + `/api/chatMessage/${chatMessageID}`, {
-                method: "DELETE",
-                credentials: "include"
+    const handleDeleteMessage = async (message) => {
+        try {
+            chatMessageID = message._id;
+            const response = await fetch($BASE_URL + `/api/chatMessage/${chatMessageID}`, {
+            method: 'DELETE',
+            credentials: 'include',
             });
-            if(response.ok){
-                toastr.success("Chat message have been deleted")
-                allMessages = []
+            if (response.ok) {
+                toastr.success('Chat message has been deleted');
+                allMessages = [];
                 await handleGetMessages();
             }
-        } catch(error){
-            toastr.warning("An unexpected error has occurred. Please try again")
+        } catch (error) {
+            toastr.warning('An unexpected error has occurred. Please try again');
             console.log(error);
         }
-    }
+    };
 
     onMount(async () => {
         await handleGetMessages();

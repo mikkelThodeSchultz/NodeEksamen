@@ -37,7 +37,7 @@
             console.log(error);
         }
     }
-    onMount(handleGetSession)
+    onMount(handleGetSession);
     onMount(initializeSocket);
 
     let showModalLogin = false;
@@ -190,20 +190,6 @@
         left: 0;
         width: 100%;
         height: 100%;
-    }
-
-    @keyframes glow_item {
-        0%{
-            box-shadow: 5px 1px 1px rgba(0, 0, 0, 0.6);
-        }
-        100% {
-            box-shadow: 0 0 1vw #FFFFFF, 0 0 3vw #FFFFFF, 0 0 10vw #FFFFFF, 0 0 10vw #FFFFFF, 0 0 .4vw #FED128, .4vw .3vw .1vw #806914;
-            color: #000000;
-        }
-        50% {
-            box-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #000000, 0 0 5vw #000000, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .4vw .3vw .1vw #40340A;
-            color: #806914;
-        }
     }
 
 </style>

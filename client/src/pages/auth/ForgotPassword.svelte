@@ -9,65 +9,63 @@
     let newPassword;
     const dispatchChangePassword = createEventDispatcher();
 
-    function handleGetCode(){
-        if(!email){
-            toastr.warning("Please enter you're email");
+    const handleGetCode = async () => {
+        if (!email) {
+            toastr.warning("Please enter your email");
             return;
         }
-        fetch($BASE_URL + '/api/forgot-password', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({email: email})
-        })
-        .then(result => {
-            if(result.status===400){
-                toastr.warning("Wrong email")
-            }
-            if(result.status===200){
-                toastr.success("We have sent a code to you're mail")
-            }
-        })
-        .catch(error => {
-            toastr.warning("An unexpected error has occurred. Please try again")
+        try {
+            const response = await fetch($BASE_URL + '/api/forgot-password', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            });
+            if (response.status === 400) {
+                toastr.warning("Wrong email");
+                }
+            if (response.status === 200) {
+                toastr.success("We have sent a code to your email");
+                }
+        } catch (error) {
+            toastr.warning("An unexpected error has occurred. Please try again");
             console.log(error);
-        })
-    }
-
-    function handleNewPassword(){
-        if(!forgotPasswordCode || !newPassword){
-            toastr.warning("Please enter both you're code and a new password")
-            return;
         }
-        fetch($BASE_URL + '/auth/password', {
+    };
+
+    const handleNewPassword = async () => {
+    if (!forgotPasswordCode || !newPassword) {
+        toastr.warning("Please enter both your code and a new password");
+        return;
+    }
+    try {
+        const response = await fetch($BASE_URL + '/auth/password', {
             method: 'PUT',
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({forgotPasswordCode: forgotPasswordCode, newPassword: newPassword})
-        })
-        .then(result => {
-            if(result.status===400){
-                toastr.warning("Wrong code")
+            body: JSON.stringify({ forgotPasswordCode, newPassword })
+            });
+        if (response.status === 400) {
+            toastr.warning("Wrong code");
             }
-            if(result.status===401){
-                toastr.warning("Code has expired")
+        if (response.status === 401) {
+            toastr.warning("Code has expired");
             }
-            if(result.status===200){
-                toastr.success("You're password has been changed succesfully")
-                setTimeout(function() {
-                    dispatchChangePassword("changePassword");
-                }, 2000);
-            }
-        })
-        .catch(error => {
-            toastr.warning("An unexpected error has occurred. Please try again")
-            console.log(error);
-        });
+        if (response.status === 200) {
+            toastr.success("Your password has been changed successfully");
+            setTimeout(() => {
+                dispatchChangePassword("changePassword");
+            }, 2000);
+        }
+    } catch (error) {
+        toastr.warning("An unexpected error has occurred. Please try again");
+        console.log(error);
     }
+    };
 
 </script>
 

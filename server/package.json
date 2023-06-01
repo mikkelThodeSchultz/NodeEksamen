@@ -26,6 +26,7 @@
     "node-cron": "^3.0.2",
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
+    "path": "^0.12.7",
     "ratelimit": "^0.0.4",
     "router": "^1.3.8",
     "session": "^0.1.0",

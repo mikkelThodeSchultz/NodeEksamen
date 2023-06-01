@@ -10,40 +10,38 @@
     const dispatchSignup = createEventDispatcher();
     const dispatchAlreadyHaveAccount = createEventDispatcher();
 
-    function handleSignUp() {
-        if(!userName || !email || !password){
-            toastr.warning("Please fill out both username, email and password");
+    const handleSignUp = async () => {
+        if (!userName || !email || !password) {
+            toastr.warning("Please fill out both username, email, and password");
             return;
         }
-        fetch($BASE_URL + '/auth/signup',{
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({userName: userName, email: email, password: password})
-        })
-        .then(result => {
-            if(result.status===400){
-                toastr.warning("Username og email has already been taken")
-            }
-            if(result.status===200){
-                toastr.success("Account created succesfully, Welcome!")
-                setTimeout(function() {
-                    result.json().then(data => {
+        try {
+            const response = await fetch($BASE_URL + '/auth/signup', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userName, email, password })
+                });
+            if (response.status === 400) {
+                toastr.warning("Username or email has already been taken");
+                }
+            if (response.status === 200) {
+                toastr.success("Account created successfully, Welcome!");
+                setTimeout(async () => {
+                    const data = await response.json();
                     loggedInUser.set(data.data.userName);
                     userRole.set(data.data.role);
                     dispatchSignup("signup");
-                })
                     navigate("/");
                 }, 2000);
             }
-        })
-        .catch(error => {
-            toastr.warning("An unexpected error has occurred. Please try again")
+        } catch (error) {
+            toastr.warning("An unexpected error has occurred. Please try again");
             console.error(error);
-        })
     }
+};
 
     function handleAlreadyHaveAnAccount() {
         dispatchAlreadyHaveAccount("alreadyHaveAccount")
