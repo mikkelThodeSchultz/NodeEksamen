@@ -44,7 +44,6 @@
 
     function handleForgotPassword () {
         dispatchForgotPassword("openForgotPassword");
-        
     }
 
 

@@ -153,7 +153,6 @@
     :global(.navbar-link){
         width: 70%;
         justify-self: center;
-        animation: glow_item 4s infinite ease-in-out alternate;
         transition: transform 0.3s ease-in-out;
         
     }
