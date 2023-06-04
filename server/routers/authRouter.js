@@ -14,8 +14,9 @@ router.post("/auth/login", isLoggedOut, async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const user = await db.users.find({ email: email }).toArray();
+    let checkedPassword = "";
     if (user.length !== 0){
-        const checkedPassword = await bcrypt.compare(password, user[0].password);
+        checkedPassword = await bcrypt.compare(password, user[0].password);
         if (checkedPassword){
             req.session.userName = user[0].userName;
             req.session.email = user[0].email;
@@ -24,7 +25,7 @@ router.post("/auth/login", isLoggedOut, async (req, res) => {
             return res.status(200).send({data: req.session});
         }
     }
-    else {
+    if(!checkedPassword || user.length === 0) {
         return res.status(400).send({message: "Wrong email or password"})
     }
     }

@@ -22,20 +22,6 @@ const shrugDemo1 = {
     releaseDate: "January 29, 2023",
     description: "Shrug er kommet for at dominere dig og din verden",
     embedLink: `<iframe style="border: 0; width: 350px; height: 622px;" src="https://bandcamp.com/EmbeddedPlayer/album=2276781933/size=large/bgcol=333333/linkcol=e99708/package=1797137217/transparent=true/" seamless><a href="https://dybdestegte.bandcamp.com/album/demo-i">Demo I by Shrug</a></iframe>`,
-    songs: [
-        {
-            title: "Next to You",
-            lenght: "07:28"
-        }, 
-        {
-            title: "Why'd You Stay?",
-            lenght: "06:38"    
-        }, 
-        {
-            title: "I'll Implode",
-            lenght: "09:21"
-        }
-    ]
 }
 const JCsvagTotal = {
     artist: "JESUM CHRISTUM",
@@ -43,35 +29,6 @@ const JCsvagTotal = {
     releaseDate: "February 24, 2023",
     description: "JC er kommet for at dominere dig og din verden",
     embedLink: `<iframe style="border: 0; width: 350px; height: 655px;" src="https://bandcamp.com/EmbeddedPlayer/album=3556587808/size=large/bgcol=333333/linkcol=e99708/package=3653272819/transparent=true/" seamless><a href="https://dybdestegte.bandcamp.com/album/svag-total">SVAG TOTAL by JESUM CHRISTUM</a></iframe>`,
-    songs: [
-        {
-            title: "SLIP",
-            length: "08:44"
-        },
-        {
-            title: "DRÆNET PÅ UVIST TID",
-            length: "11:10"
-        },
-        {
-            title: "PAUSE FRA EKSISTENS",
-            length: "06:22"
-        },
-        {
-            title: "HERSKER",
-            lenght: "06:15"
-        }
-    ]
-}
-
-const comment1 = {
-    userName: "navn på person der har skrevet",
-    timeStamp: "dato: d. 13-12-23",
-    comment: "Det her er en kommentar om hvor fedt jeg syntes det her band her!!"
-}
-const comment2 = {
-    userName: "En anden person der har skrevet",
-    timeStamp: "dato: d. 23-12-22",
-    comment: "Det her band sutter!"
 }
 
 const show1 = {
